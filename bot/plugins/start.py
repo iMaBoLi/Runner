@@ -1,9 +1,6 @@
-from pyrogram import Client, filters
+from pyrogram import filters
+from bot import bot
 
-@Client.on_message(filters.command(["start"]))
-async def start(bot, update):
-    await bot.send_message(
-        chat_id=update.chat.id,
-        text="Hello there!",
-        reply_to_message_id=update.message_id
-    )
+@bot.on_message(filters.command(["start"]))
+async def start(client, message):
+    await message.reply("**• Hello There!**")
