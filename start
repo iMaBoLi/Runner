@@ -1,0 +1,28 @@
+#!/bin/bash
+
+_run_python_code() {
+    python3${pVer%.*} -c "$1"
+}
+
+_run() {
+    echo "• Starting Deployment . . ."
+    $(_run_python_code '
+import os
+import glob
+import shutil
+
+os.system("git clone https://github.com/Craboli83/mybot/ mybot")
+
+shutil.rmtree("/app/bot/")
+shutil.copytree("/app/mybot/bot/", "/app/bot/")
+shutil.rmtree("./mybot")
+')
+    echo "• Deployment Completed!"
+}
+
+_start_bot () {
+    python3 -m bot
+}
+
+_run
+_start_bot
