@@ -1,2 +1,5 @@
 pyrogram
+tgcrypto
+pyromod
+requests
 python-decouple
