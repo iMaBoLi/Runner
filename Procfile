@@ -1,1 +1,1 @@
-BotzHub: python -m PyroBot
+worker: bash start
