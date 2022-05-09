@@ -1,0 +1,32 @@
+{
+  "name": "pyrobot",
+  "description": "Telegram Bot Based On Pyrogram!",
+  "keywords": [
+    "plugin",
+    "bot",
+    "mybot"
+  ],
+  "repository": "https://github.com/Craboli83/mybot/",
+  "website": "#Aboli",
+  "success_url": "#Aboli",
+  "env": {
+    "API_ID": {
+      "value": ""
+    },
+    "API_HASH": {
+      "value": ""
+    },
+    "BOT_TOKEN": {
+      "value": ""
+    }
+  },
+  "buildpacks": [{
+    "url": "heroku/python"
+  }],
+  "formation": {
+    "worker": {
+      "quantity": 1,
+      "size": "free"
+    }
+  }
+}
