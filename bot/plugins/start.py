@@ -1,6 +1,5 @@
-from pyrogram import filters
-from bot import bot
+from bot.events import Cmd
 
-@bot.on_message(filters.command(["start"]))
-async def start(client, message):
-    await message.reply("**• Hello There!**")
+@Cmd(pattern="start")
+async def start(event):
+    await event.reply("**• Hello There!**")
