@@ -28,21 +28,21 @@ def chunks(elements, size):
     n = max(1, size)
     return (elements[i:i + n] for i in range(0, len(elements), n))
 
-def load_plugins(folder):
-    files = glob.glob(f"userbot/{folder}/*.py")
+def load_plugins():
+    files = glob.glob(f"bomber/plugins/*.py")
     for name in files:
         plugin_name = os.path.basename(name)
         try:
-            path = Path(f"userbot/{folder}/{plugin_name}")
-            name = "userbot.{}.{}".format(folder , plugin_name.replace(".py" , ""))
+            path = Path(f"bomber/plugins/{plugin_name}")
+            name = "bomber.plugins.{}".format(plugin_name.replace(".py" , ""))
             spec = importlib.util.spec_from_file_location(name, path)
             load = importlib.util.module_from_spec(spec)
             load.logger = logging.getLogger(plugin_name)
             spec.loader.exec_module(load)
             sys.modules[name] = load
-            print(f"""• Bot Has Imported ( {plugin_name.replace(".py", "")} ) Plugin""")
+            print(f"""• Bomber Has Imported ( {plugin_name.replace(".py", "")} ) Plugin""")
         except Exception as e:
-            print(f"""• Bot Can't Import ( {plugin_name.replace(".py", "")} ) Plugin - Error : < {e} >""")
+            print(f"""• Bomber Can't Import ( {plugin_name.replace(".py", "")} ) Plugin - Error : < {e} >""")
 
 def convert_bytes(size_bytes):
    if size_bytes == 0:
