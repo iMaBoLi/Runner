@@ -1,5 +1,6 @@
-from bomber.events import Cmd
+from bomber import bot
+from telethon import events
 
-@Cmd(pattern="start")
+@bot.on(events.NewMessage(pattern="(?i)\/start"))
 async def start(event):
     await event.reply("**• Hello There!**")
