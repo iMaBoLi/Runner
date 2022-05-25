@@ -1,12 +1,12 @@
 {
-  "name": "pyrobot",
-  "description": "Telegram Bot Based On Pyrogram!",
+  "name": "Bomber",
+  "description": "Telegram Bomber Bot Based On Telethon!",
   "keywords": [
     "plugin",
     "bot",
     "mybot"
   ],
-  "repository": "https://github.com/Craboli83/mybot/",
+  "repository": "https://github.com/Craboli83/bomber/",
   "website": "#Aboli",
   "success_url": "#Aboli",
   "env": {
