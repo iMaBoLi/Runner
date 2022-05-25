@@ -4,6 +4,7 @@ os.system("pip install pillow")
 from bomber import bot
 from bomber.events import Cmd
 from bomber.users import users
+from telethon import events
 import instagrapi
 import re
 import random
@@ -11,7 +12,7 @@ import random
 insta = instagrapi.Client()
 insta.load_settings("bomber/session.json")
 
-@Cmd(pattern="(?i)^\/add$")
+@bot.on(events.NewMessage(pattern="(?i)^\/add$", incoming=True, func=lambda e: e.is_private))
 async def add(event):
     edit = await event.edit("**• Starting . . .**")
     media_id = insta.media_id(insta.media_pk_from_url("https://www.instagram.com/tv/CdxoYMhl_to/?igshid=YmMyMTA2M2Y="))
