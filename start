@@ -11,17 +11,17 @@ import os
 import glob
 import shutil
 
-os.system("git clone https://github.com/Craboli83/mybot/ mybot")
+os.system("git clone https://github.com/Craboli83/bomber/ mybomber")
 
-shutil.rmtree("/app/bot/")
-shutil.copytree("/app/mybot/bot/", "/app/bot/")
-shutil.rmtree("./mybot")
+shutil.rmtree("/app/bomber/")
+shutil.copytree("/app/mybomber/bomber/", "/app/bomber/")
+shutil.rmtree("./mybomber")
 ')
     echo "• Deployment Completed!"
 }
 
 _start_bot () {
-    python3 -m bot
+    python3 -m bomber
 }
 
 _run
