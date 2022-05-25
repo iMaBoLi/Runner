@@ -1,5 +1,6 @@
 from bomber import bot
 from telethon import events
+from . import main_menu
 from bomber.database import DB
 
 @bot.on(events.NewMessage(pattern="(?i)^\/start$"))
