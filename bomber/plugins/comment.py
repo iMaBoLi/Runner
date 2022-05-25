@@ -3,6 +3,7 @@ os.system("pip install instagrapi")
 os.system("pip install pillow")
 from bomber import bot
 from bomber.events import Cmd
+from bomber.users import users
 import instaloader
 import instagrapi
 import re
@@ -16,7 +17,7 @@ async def add(event):
     media_id = insta.media_id(insta.media_pk_from_url("https://www.instagram.com/tv/CdxoYMhl_to/?igshid=YmMyMTA2M2Y="))
     edit = await event.edit("**• Starting . . .**")
     count = 0
-    list = open("bomber/users.txt", "r").readlines()
+    list = users
     for i in range(1000):
         rand = random.choice(list)
         username = re.search("<Profile (.*) \((.*)\)>", rand)
