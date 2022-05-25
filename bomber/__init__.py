@@ -10,9 +10,9 @@ print("• Starting Bot . . .")
 
 try:
     bot = TelegramClient(
-        "MyBot",
-        API_ID,
-        API_HASH,
+        session="Bomber",
+        api_id=API_ID,
+        api_hash=API_HASH,
     ).start(bot_token=BOT_TOKEN)
 except Exception as e:
     print(f"• Error On Create Bot: {e}")
