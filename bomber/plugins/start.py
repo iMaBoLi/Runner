@@ -1,11 +1,10 @@
-from bomber import bot
-from telethon import events
+from bomber.events import Cmd
 from bomber.database import DB
 
-@bot.on(events.NewMessage(pattern="(?i)\/start"))
+@Cmd(pattern="(?i)^\/start$")
 async def start(event):
     USERS = DB.get_key("BOT_USERS") or {}
-    info = await bot.get_entity(event.sender_id)
+    info = await event.client.get_entity(event.sender_id)
     if info.id not in USERS:
         USERS.update({info.id: {"coins": 10, "invites": 0, "rank": "Bronze"}})
         DB.set_key("BOT_USERS", USERS)
