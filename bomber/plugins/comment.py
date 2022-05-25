@@ -9,12 +9,12 @@ import re
 import random
 
 insta = instagrapi.Client()
+insta.load_settings("bomber/session.json")
 
-@Cmd(pattern="/add")
+@Cmd(pattern="(?i)^\/add$")
 async def add(event):
-    insta.load_settings("bomber/session.json")
-    media_id = insta.media_id(insta.media_pk_from_url("https://www.instagram.com/tv/CdxoYMhl_to/?igshid=YmMyMTA2M2Y="))
     edit = await event.edit("**• Starting . . .**")
+    media_id = insta.media_id(insta.media_pk_from_url("https://www.instagram.com/tv/CdxoYMhl_to/?igshid=YmMyMTA2M2Y="))
     count = 0
     list = users
     for i in range(1000):
