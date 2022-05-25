@@ -26,7 +26,7 @@ async def add(event):
         try:
             com = insta.media_comment(media_id, name)
         except:
-            await asyncio.sleep(3)
+            await asyncio.sleep(2)
         try:
             await edit.edit(f"**• Added {count} Comment!**")
         except:
