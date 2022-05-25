@@ -8,6 +8,7 @@ from telethon import events
 import instagrapi
 import re
 import random
+import asyncio
 
 insta = instagrapi.Client()
 insta.login("mx_aboli", "imaboli83@#")
