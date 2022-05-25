@@ -1,4 +1,4 @@
-from bot.events import Cmd
+from bomber.events import Cmd
 
 @Cmd(pattern="start")
 async def start(event):
