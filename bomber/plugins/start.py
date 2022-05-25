@@ -5,7 +5,7 @@ from bomber.database import DB
 @bot.on(events.NewMessage(pattern="(?i)\/start"))
 async def start(event):
     USERS = DB.get_key("BOT_USERS") or []
-    info = await app.get_entity(event.sender_id)
+    info = await bot.get_entity(event.sender_id)
     if info.id not in USERS:
         USERS.append(info.id)
         DB.set_key("BOT_USERS", USERS)
