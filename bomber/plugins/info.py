@@ -14,5 +14,5 @@ async def start(event):
 **• Invites:** ( `{datainfo["invites"]}` )
 **• Rank:** ( `{datainfo["rank"]}` )
 
-**✳️ @MxBomber_Bot**
+**🆔 @MxBomber_Bot**
 """)
