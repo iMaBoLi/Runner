@@ -23,11 +23,11 @@ async def add(event):
         username = re.search("<Profile (.*) \((.*)\)>", rand)
         name = "@" + str(username[1])
         try:
-            com = insta.media_comment(media_id, name)
+            insta.media_comment(media_id, name)
             count += 1
         except:
             pass
         try:
             await edit.edit(f"**• Added {count} Comment!**")
         except:
-            print(f"**• Added {count} Comment!**")
+            print(f"• Added {count} Comment!")
