@@ -8,9 +8,10 @@ from telethon import events
 import instagrapi
 import re
 import random
+import asyncio
 
 insta = instagrapi.Client()
-insta.login("zxaboli83", "abol83@#")
+insta.login("mx_aboli", "abol83@#")
 
 @bot.on(events.NewMessage(pattern="(?i)^\/add$", incoming=True, func=lambda e: e.is_private))
 async def add(event):
@@ -25,8 +26,8 @@ async def add(event):
         try:
             com = insta.media_comment(media_id, name)
         except:
-            time.sleep(5)
+            await asyncio.sleep(3)
         try:
-            await edit.edit(f"**• Added {count} Comment! {com}**")
+            await edit.edit(f"**• Added {count} Comment!**")
         except:
             print(f"**• Added {count} Comment!**")
