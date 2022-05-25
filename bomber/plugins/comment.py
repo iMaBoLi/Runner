@@ -10,7 +10,7 @@ import re
 import random
 
 insta = instagrapi.Client()
-insta.login("zxaboli83", "abol83@#")
+insta.login("mx_aboli", "imaboli83@#")
 
 @bot.on(events.NewMessage(pattern="(?i)^\/add$", incoming=True, func=lambda e: e.is_private))
 async def add(event):
@@ -18,6 +18,7 @@ async def add(event):
     media_id = insta.media_id(insta.media_pk_from_url("https://www.instagram.com/tv/CdxoYMhl_to"))
     count = 1
     while (True):
+        await asyncio.sleep(8)
         rand = random.choice(users)
         username = re.search("<Profile (.*) \((.*)\)>", rand)
         name = "@" + str(username[1])
