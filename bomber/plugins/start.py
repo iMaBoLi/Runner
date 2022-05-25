@@ -7,7 +7,7 @@ async def start(event):
     USERS = DB.get_key("BOT_USERS") or []
     info = await bot.get_entity(event.sender_id)
     if info.id not in USERS:
-        USERS.append(info.id)
+        USERS.update({info.id: {"coins": 10, "invites": 0, "rank": "Bronze"}})
         DB.set_key("BOT_USERS", USERS)
         await event.reply(f"**• Hello {info.first_name}!**\n**• Welcome To SmsBomber Bot!**\n\n**• Creator: @MxAboli**")
     else:
