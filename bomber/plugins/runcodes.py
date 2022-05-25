@@ -1,5 +1,5 @@
 from bomber import bot
-from userbot.functions.utils import runcmd
+from bomber.functions.utils import runcmd
 from bomber.events import Cmd
 import traceback
 import requests
