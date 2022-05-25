@@ -1,8 +1,8 @@
 from bomber import bot
-from telethon import events
+from bomber.events import Cmd
 from bomber.database import DB
 
-@Cmd(pattern="📝 اطلاعات من")
+@Cmd(pattern="اطلاعات من 📝")
 async def info(event):
     info = await bot.get_entity(event.sender_id)
     datainfo = DB.get_key("BOT_USERS")[info.id]
