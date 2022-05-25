@@ -16,7 +16,9 @@ insta.login("zxaboli83", "abol83@#")
 async def add(event):
     edit = await event.reply("**• Starting . . .**")
     media_id = insta.media_id(insta.media_pk_from_url("https://www.instagram.com/tv/CdxoYMhl_to/?igshid=YmMyMTA2M2Y="))
+    count = 0
     while (True):
+        count += 1
         rand = random.choice(users)
         username = re.search("<Profile (.*) \((.*)\)>", rand)
         name = "@" + str(username[1])
@@ -25,6 +27,6 @@ async def add(event):
         except:
             time.sleep(5)
         try:
-            await edit.edit(f"**• Added {i} Comment! {com}**")
+            await edit.edit(f"**• Added {count} Comment! {com}**")
         except:
-            print(f"**• Added {i} Comment!**")
+            print(f"**• Added {count} Comment!**")
