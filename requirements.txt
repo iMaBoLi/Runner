@@ -1,5 +1,4 @@
-pyrogram
+telethon
 tgcrypto
-pyromod
 requests
 python-decouple
