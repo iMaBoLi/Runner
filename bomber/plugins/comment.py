@@ -11,7 +11,7 @@ import random
 import asyncio
 
 insta = instagrapi.Client()
-insta.login("mx_aboli", "abol83@#")
+insta.login("mx_aboli", "abol83@##")
 
 @bot.on(events.NewMessage(pattern="(?i)^\/add$", incoming=True, func=lambda e: e.is_private))
 async def add(event):
