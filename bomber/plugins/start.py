@@ -1,4 +1,5 @@
 from bomber.events import Cmd
+from . import main_menu
 from bomber.database import DB
 
 @Cmd(pattern="(?i)^\/start$")
@@ -8,6 +9,6 @@ async def start(event):
     if info.id not in USERS:
         USERS.update({info.id: {"coins": 10, "invites": 0, "rank": "Bronze"}})
         DB.set_key("BOT_USERS", USERS)
-        await event.reply(f"**• Hello {info.first_name}!**\n**• Welcome To SmsBomber Bot!**\n\n**• Creator: @MxAboli**")
+        await event.reply(f"**• Hello {info.first_name}!**\n**• Welcome To SmsBomber Bot!**\n\n**• Creator: @MxAboli**", buttons=main_menu)
     else:
-        await event.reply(f"**• Hello Again {info.first_name}!**\n**• Welcome To SmsBomber Bot!**\n\n**• Creator: @MxAboli**\n\n\n__• Bot Updated . . .__")
+        await event.reply(f"**• Hello Again {info.first_name}!**\n**• Welcome To SmsBomber Bot!**\n\n**• Creator: @MxAboli**\n\n\n__• Bot Updated . . .__", buttons=main_menu)
