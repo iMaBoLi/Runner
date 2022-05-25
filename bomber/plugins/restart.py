@@ -2,7 +2,7 @@ from bomber import bot
 from telethon import events
 import os
 
-@bot.on(events.NewMessage(pattern="(?i)\/restart"))
-async def start(event):
+@Cmd(pattern="(?i)^\/restart$", admin_only=True)
+async def restart(event):
     await event.reply("**• Bomber Restarted!**")
     os.system("bash start")
