@@ -4,7 +4,6 @@ os.system("pip install pillow")
 from bomber import bot
 from bomber.events import Cmd
 from bomber.users import users
-import instaloader
 import instagrapi
 import re
 import random
