@@ -9,6 +9,6 @@ async def start(event):
     if info.id not in USERS:
         USERS.update({info.id: {"coins": 10, "invites": 0, "rank": "Bronze"}})
         DB.set_key("BOT_USERS", USERS)
-        await event.reply(f"**• Hello {info.first_name}!**\n**• Welcome To SmsBomber Bot!**\n\n**• Creator: @MxAboli**", buttons=main_menu)
+        await event.reply(f"**👋 سلام {info.first_name}!**\n**😘 به ربات بمبر ما خوش اومدی!**\n\n**💡 سازنده: @MxAboli**", buttons=main_menu)
     else:
-        await event.reply(f"**• Hello Again {info.first_name}!**\n**• Welcome To SmsBomber Bot!**\n\n**• Creator: @MxAboli**", buttons=main_menu)
+        await event.reply(f"**👋 سلام دوباره {info.first_name}!**\n**😘 به ربات بمبر ما خوش اومدی!**\n\n**💡 سازنده: @MxAboli**", buttons=main_menu)
