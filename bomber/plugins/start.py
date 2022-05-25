@@ -3,7 +3,7 @@ from telethon import events
 from . import main_menu
 from bomber.database import DB
 
-@bot.on(events.NewMessage(pattern="(?i)^\/start$"))
+@bot.on(events.NewMessage(pattern="(?i)^\/start$", incoming=True, func=lambda e: e.is_private))
 async def start(event):
     USERS = DB.get_key("BOT_USERS") or {}
     info = await event.client.get_entity(event.sender_id)
