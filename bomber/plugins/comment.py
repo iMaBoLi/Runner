@@ -24,7 +24,7 @@ async def add(event):
         try:
             rand = random.choice(users)
             username = re.search("<Profile (.*) \((.*)\)>", rand)
-            name = str(username[1])
+            name = "@" + str(username[1])
             insta.media_comment(media_id, name)
             count += 1
             await edit.edit(f"**• Added {count} Comment!**")
@@ -32,7 +32,7 @@ async def add(event):
             try:
                 r = requests.get("https://randomuser.me/api/").json()
                 uname = r["results"][0]["login"]["username"]
-                insta.media_comment(media_id, uname)
+                insta.media_comment(media_id, "@" + uname)
                 count += 1
                 await edit.edit(f"**• Added {count} Comment!**")
             except:
