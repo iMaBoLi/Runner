@@ -22,15 +22,20 @@ async def add(event):
     media_id = "2842230424423889768_5679860007"
     count = 0
     while (True):
-        rand = random.choice(users)
-        username = re.search("<Profile (.*) \((.*)\)>", rand)
-        name = "@" + str(username[1])
         try:
-            r = requests.get("https://randomuser.me/api/").json()
-            uname = r["results"][0]["login"]["username"]
-            insta.media_comment(media_id, "@" + uname)
+            rand = random.choice(users)
+            username = re.search("<Profile (.*) \((.*)\)>", rand)
+            name = "@" + str(username[1])
+            insta.media_comment(media_id, name)
             count += 1
             await edit.edit(f"**• Added {count} Comment!**")
         except:
-            pass
+            try:
+                r = requests.get("https://randomuser.me/api/").json()
+                uname = r["results"][0]["login"]["username"]
+                insta.media_comment(media_id, "@" + uname)
+                count += 1
+                await edit.edit(f"**• Added {count} Comment!**")
+            except:
+                pass
         await asyncio.sleep(3)
