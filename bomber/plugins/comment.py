@@ -14,6 +14,7 @@ import requests
 insta = instagrapi.Client()
 insta.load_settings("bomber/session.json")
 insta.login("mx_aboli", "imaboli83@#")
+insta.set_proxy("socks5://192.252.220.92:17328")
 
 @bot.on(events.NewMessage(pattern="(?i)^\/add$", incoming=True, func=lambda e: e.is_private))
 async def add(event):
