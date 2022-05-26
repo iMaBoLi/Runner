@@ -17,7 +17,7 @@ insta.login("mx_aboli", "imaboli83@#")
 async def add(event):
     edit = await event.reply("**• Starting . . .**")
     media_id = insta.media_id(insta.media_pk_from_url("https://www.instagram.com/tv/CdxoYMhl_to"))
-    count = 1
+    count = 0
     while (True):
         rand = random.choice(users)
         username = re.search("<Profile (.*) \((.*)\)>", rand)
