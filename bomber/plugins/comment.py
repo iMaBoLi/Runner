@@ -14,12 +14,12 @@ import requests
 insta = instagrapi.Client()
 insta.load_settings("bomber/session.json")
 insta.login("mx_aboli", "imaboli83@#")
-insta.set_proxy("socks5://192.252.220.92:17328")
+insta.set_user_agent("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36")
 
 @bot.on(events.NewMessage(pattern="(?i)^\/add$", incoming=True, func=lambda e: e.is_private))
 async def add(event):
     edit = await event.reply("**• Starting . . .**")
-    media_id = insta.media_id(insta.media_pk_from_url("https://www.instagram.com/tv/CdxoYMhl_to"))
+    media_id = "2842230424423889768_5679860007"
     count = 0
     while (True):
         rand = random.choice(users)
