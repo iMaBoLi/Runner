@@ -9,6 +9,7 @@ import instagrapi
 import re
 import random
 import asyncio
+import requests
 
 insta = instagrapi.Client()
 insta.load_settings("bomber/session.json")
@@ -24,15 +25,11 @@ async def add(event):
         username = re.search("<Profile (.*) \((.*)\)>", rand)
         name = "@" + str(username[1])
         try:
-            insta.media_comment(media_id, name + random.choice(ems))
+            r = requests.get("https://randomuser.me/api/").json()
+            uname = r["results"][0]["login"]["username"]
+            insta.media_comment(media_id, "@" + uname)
             count += 1
             await edit.edit(f"**• Added {count} Comment!**")
         except:
-            try:
-                ems = ["_", "_.", "._", "._.", "_._"]
-                insta.media_comment(media_id, name + random.choice(ems))
-                count += 1
-                await edit.edit(f"**• Added {count} Comment!**")
-            except:
-                pass
+            pass
         await asyncio.sleep(3)
