@@ -19,7 +19,6 @@ async def add(event):
     media_id = insta.media_id(insta.media_pk_from_url("https://www.instagram.com/tv/CdxoYMhl_to"))
     count = 1
     while (True):
-        await asyncio.sleep(8)
         rand = random.choice(users)
         username = re.search("<Profile (.*) \((.*)\)>", rand)
         name = "@" + str(username[1])
@@ -31,4 +30,5 @@ async def add(event):
         try:
             await edit.edit(f"**• Added {count} Comment!**")
         except:
-            print(f"• Added {count} Comment!")
+            pass
+        await asyncio.sleep(5)
