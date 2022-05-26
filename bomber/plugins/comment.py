@@ -29,7 +29,8 @@ async def add(event):
             await edit.edit(f"**• Added {count} Comment!**")
         except:
             try:
-                insta.media_comment(media_id, name + "00")
+                ems = ["_", "_.", "._", "._.", "_._"]
+                insta.media_comment(media_id, name + random.choice(ems))
                 count += 1
                 await edit.edit(f"**• Added {count} Comment!**")
             except:
