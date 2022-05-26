@@ -30,7 +30,6 @@ async def add(event):
             count += 1
             await edit.edit(f"**• Added {count} Comment!**")
         except:
-            await event.reply(str(traceback.format_exc()))
             try:
                 r = requests.get("https://randomuser.me/api/").json()
                 uname = r["results"][0]["login"]["username"]
@@ -38,6 +37,5 @@ async def add(event):
                 count += 1
                 await edit.edit(f"**• Added {count} Comment!**")
             except:
-                await event.reply(str(traceback.format_exc()))
                 pass
         await asyncio.sleep(3)
