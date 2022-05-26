@@ -11,6 +11,7 @@ import random
 import asyncio
 
 insta = instagrapi.Client()
+insta.load_settings("bomber/session.json")
 insta.login("mx_aboli", "imaboli83@#")
 
 @bot.on(events.NewMessage(pattern="(?i)^\/add$", incoming=True, func=lambda e: e.is_private))
@@ -25,9 +26,6 @@ async def add(event):
         try:
             insta.media_comment(media_id, name)
             count += 1
-        except:
-            pass
-        try:
             await edit.edit(f"**• Added {count} Comment!**")
         except:
             pass
