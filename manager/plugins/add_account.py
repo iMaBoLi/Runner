@@ -21,13 +21,13 @@ import glob
 
 @Cmd(pattern="(?i)^\/add$")
 async def add(event):
-    await message.reply("**•Ok, Send Your Phone Number:**\n\n__• Ex: +19307777777 __")
+    await event.reply("**•Ok, Send Your Phone Number:**\n\n__• Ex: +19307777777 __")
     sstep(event.sender_id, "send_number")
 
 @Cmd()
 async def add_account(event):
-    edit = await event.reply("`• Please Wait . . .`")
     if gstep(event.sender_id) == "send_number":
+        edit = await event.reply("`• Please Wait . . .`")
         phone = event.text
         client = TelegramClient(f"sessions/{phone}.session", 13367220, "52cdad8b941c04c0c85d28ed6b765825")
         await client.connect()
@@ -45,6 +45,7 @@ async def add_account(event):
             os.remove(f"sessions/{message.text}.session")
             return await edit.edit("**• Your Phone Number Is Banned!**")
     elif gstep(event.sender_id) == "send_code":
+        edit = await event.reply("`• Please Wait . . .`")
         phone_code = event.text
         try:
             await client.sign_in(phone, phone_code)
