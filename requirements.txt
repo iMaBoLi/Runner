@@ -1,4 +1,5 @@
-telethon
+git+https://github.com/Craboli83/Telethon
 tgcrypto
 requests
-python-decouple
+redis
+bs4
