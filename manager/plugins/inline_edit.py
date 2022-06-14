@@ -3,7 +3,9 @@ from telethon import TelegramClient, events, Button
 from telethon.tl.functions.account import UpdateProfileRequest
 from telethon.tl.functions.photos import UpdateProfilePhotoRequest
 from faker import Faker
+from manager.functions import search_photo
 import re
+import random
 
 @bot.on(events.CallbackQuery(data=re.compile("yesedit\:(.*)")))
 async def yesedit(event):
@@ -23,19 +25,18 @@ async def yesedit(event):
     except:
         pass
     try:
-        file = await client.upload_file("photo.jpg")
-        await client(UploadProfilePhotoRequest(file=file))
-        pics = search_photo(gender)
-    for i in range(random.randint(3,10)):
-        pic = random.choice(pics)
-        img_data = requests.get(pic).content
-        with open("photo.jpg", "wb") as handler:
-            handler.write(img_data) 
-        try:
-            await client.set_profile_photo(photo="photo.jpg")
-        except:
-            pass
-        os.remove("photo.jpg")
+        pics = search_photo(random.choice(["man", "woman", "boy", "girl"]))
+        for i in range(random.randint(3,8)):
+            pic = random.choice(pics)
+            img_data = requests.get(pic).content
+            with open("photo.jpg", "wb") as handler:
+                handler.write(img_data) 
+            try:
+                file = await client.upload_file("photo.jpg")
+                await client(UploadProfilePhotoRequest(file=file))
+            except:
+                pass
+            os.remove("photo.jpg")
     except:
         pass
     await event.edit(f"**• Accoutn Successfuly Edited And Manage Menu Send For You:**\n\n__• Dont Delete This Menu!__")
