@@ -1,8 +1,8 @@
 from manager import bot
-from telethon import events
+from manager.events import Cmd
 from manager.database import DB
 
-@bot.on(events.NewMessage(pattern="(?i)^\/start$", incoming=True, func=lambda e: e.is_private))
+@Cmd(pattern="(?i)^\/start$", func=lambda e: e.is_private)
 async def start(event):
     USERS = DB.get_key("BOT_USERS") or []
     info = await event.client.get_entity(event.sender_id)
