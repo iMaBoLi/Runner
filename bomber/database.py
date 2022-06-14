@@ -1,5 +1,3 @@
-import os
-os.system("pip install redis")
 from redis import Redis
 import glob
 
