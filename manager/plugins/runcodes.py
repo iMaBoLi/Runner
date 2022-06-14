@@ -1,6 +1,5 @@
-from bomber import bot
-from bomber.functions.utils import runcmd
-from bomber.events import Cmd
+from manager import bot
+from manager.events import Cmd
 import traceback
 import requests
 import asyncio
