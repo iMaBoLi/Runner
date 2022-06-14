@@ -1,4 +1,4 @@
-from . import bot
+from . import bot, LOG_GROUP
 from telethon import events
 from traceback import format_exc
 import os
@@ -22,8 +22,8 @@ def Cmd(
                 return
             try:
                 await func(event)
-            except:
-                return
+            except Exception as e:
+                await bot.send_message(LOG_GROUP, f"**#Error**\n\n**• New Error:** ( `{e}` )")
         bot.add_event_handler(wrapper, events.MessageEdited(pattern=pattern, **kwargs))
         bot.add_event_handler(wrapper, events.NewMessage(pattern=pattern, **kwargs))
         return wrapper
