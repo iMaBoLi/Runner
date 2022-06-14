@@ -26,14 +26,14 @@ async def add(event):
 
 @Cmd()
 async def add_account(event):
-    if gstep(event.sender_id) == "send_number":
+    if gstep(event.sender_id) == "send_number" and re.search("[\+]?[1-9][0-9 .\-\(\)]{8,16}[0-9]", event.text):
         edit = await event.reply("`• Please Wait . . .`")
         phone = event.text
         client = TelegramClient(f"sessions/{phone}.session", 13367220, "52cdad8b941c04c0c85d28ed6b765825")
         await client.connect()
         try:
             scode = await client.send_code(phone)
-            sstep(event.sender_id, "send_code")
+            sstep(event.sender_id, f"send_code:{phone}")
             await edit.edit(f"**• Ok, Send Your Telegram Code For:** ( `{phone}` )")
         except PhoneNumberInvalidError:
             os.remove(f"sessions/{message.text}.session")
@@ -44,8 +44,11 @@ async def add_account(event):
         except PhoneNumberBannedError:
             os.remove(f"sessions/{message.text}.session")
             return await edit.edit("**• Your Phone Number Is Banned!**")
-    elif gstep(event.sender_id) == "send_code":
+    elif "send_code" in gstep(event.sender_id):
         edit = await event.reply("`• Please Wait . . .`")
+        phone = gstep(event.sender_id).split(":")[1]
+        client = TelegramClient(f"sessions/{phone}.session", 13367220, "52cdad8b941c04c0c85d28ed6b765825")
+        await client.connect()
         phone_code = event.text
         try:
             await client.sign_in(phone, phone_code)
