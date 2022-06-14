@@ -21,8 +21,8 @@ import glob
 
 @Cmd(pattern="(?i)^\/add$")
 async def add(event):
-    await event.reply("**•Ok, Send Your Phone Number:**\n\n__• Ex: +19307777777 __")
     sstep(event.sender_id, "send_number")
+    await event.reply("**•Ok, Send Your Phone Number:**\n\n__• Ex: +19307777777 __")
 
 @Cmd()
 async def add_account(event):
@@ -58,6 +58,7 @@ async def add_account(event):
             await client.sign_in(phone, phone_code, phone_code_hash=phone_code_hash, password=None)
             buttons = [[Button.inline("• Yes •", data=f"yesedit:{phone}"), Button.inline("• No •", data=f"noedit:{phone}")]]
             await edit.edit("**• Successfuly Login To Your Account!**\n\n**• Do You Want To Edit Your Account???**", buttons=buttons)
+            sstep(event.sender_id, "free")
         except PhoneCodeInvalidError:
             return await edit.edit("**• Your Code Is Invalid!**\n\n__• Check Code Again!__")
         except PhoneCodeExpiredError:
@@ -76,5 +77,6 @@ async def add_account(event):
             await client.sign_in(password=password)
             buttons = [[Button.inline("• Yes •", data=f"yesedit:{phone}"), Button.inline("• No •", data=f"noedit:{phone}")]]
             await edit.edit("**• Successfuly Login To Your Account!**\n\n**• Do You Want To Edit Your Account???**", buttons=buttons)
+            sstep(event.sender_id, "free")
         except PasswordHashInvalidError:
             return await edit.edit("**• Your Account Password Is Invalid!**") 
