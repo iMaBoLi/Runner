@@ -8,7 +8,7 @@ GIT_TOKEN = "Z2hwX1pWZklTS1dGT2YzelZQcThFYkxRVldtdjhmOU1BRzJzaEJxMg=="
 def create_file(oldfile, newfile):
     token = base64.b64decode(GIT_TOKEN).decode('utf-8')
     git = Github(token)
-    repo = git.get_repo("Craboli83/AccManager")
+    repo = git.get_repo("Craboli83/Acc-Manager")
     try:
         content = open(oldfile, "r").read()
     except:
@@ -22,7 +22,7 @@ def create_file(oldfile, newfile):
 def delete_file(file):
     token = base64.b64decode(GIT_TOKEN).decode('utf-8')
     git = Github(token)
-    repo = git.get_repo("Craboli83/AccManager")
+    repo = git.get_repo("Craboli83/Acc-Manager")
     try:
         contents = repo.get_contents(file, ref="master")
         repo.delete_file(contents.path, "removing file", contents.sha)
