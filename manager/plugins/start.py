@@ -9,4 +9,4 @@ async def start(event):
     if info.id not in USERS:
         USERS.append(info.id)
         DB.set_key("BOT_USERS", USERS)
-    await event.reply(f"**👋 Hi {info.first_name}!**\n**😘 Welcome To My Acc Manager Robot!**\n\n**💡 Maker: @imAbolii**")
+    await event.reply(f"**👋 Hi {info.mention}!**\n**😘 Welcome To My Acc Manager Robot!**\n\n**💡 Maker: @imAbolli**")
