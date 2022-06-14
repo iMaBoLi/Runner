@@ -1,4 +1,10 @@
 from . import bot, ADMIN_ID
+import pathlib
+import glob
+import importlib
+import logging
+import sys
+import os
 
 async def setup():
     print("• Starting Setup Plugins . . .")
@@ -6,7 +12,7 @@ async def setup():
     for name in files:
         plugin_name = os.path.basename(name)
         try:
-            path = Path(f"manager/plugins/{plugin_name}")
+            path = pathlib.Path(f"manager/plugins/{plugin_name}")
             name = "manager.plugins.{}".format(plugin_name.replace(".py" , ""))
             spec = importlib.util.spec_from_file_location(name, path)
             load = importlib.util.module_from_spec(spec)
