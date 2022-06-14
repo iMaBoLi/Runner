@@ -1,6 +1,6 @@
 from manager import bot
 from manager.events import Cmd
-from telethon import TelegramClient
+from telethon import TelegramClient, Button
 from manager.database import DB
 from manager.steps import steps, sstep, gstep
 from telethon.errors import (
@@ -33,7 +33,6 @@ async def add_account(event):
         await client.connect()
         try:
             scode = await client.send_code_request(phone)
-            await event.reply(str(scode))
             sstep(event.sender_id, f"send_code:{phone}:{scode.phone_code_hash}")
             return await edit.edit(f"**• Ok, Send Your Telegram Code For:** ( `{phone}` )")
         except PhoneNumberInvalidError:
@@ -54,11 +53,11 @@ async def add_account(event):
         phone_code_hash = gstep(event.sender_id).split(":")[2]
         client = TelegramClient(f"sessions/{phone}.session", 13367220, "52cdad8b941c04c0c85d28ed6b765825")
         await client.connect()
-        phone_code = event.text
+        phone_code = event.text.replace(" ", "")
         try:
             await client.sign_in(phone, phone_code, phone_code_hash=phone_code_hash, password=None)
-            await edit.edit("**• Successfuly LogIn!**")
-            await client.log_out()
+            buttons = [[Button.inline("• Yes •", data=f"yesedit:{phone}"), Button.inline("• No •", data=f"noedit:{phone}")]]
+            await edit.edit("**• Successfuly Login To Your Account!**\n\n**• Do You Want To Edit Your Account???**", buttons=buttons)
         except PhoneCodeInvalidError:
             return await edit.edit("**• Your Code Is Invalid!**\n\n__• Check Code Again!__")
         except PhoneCodeExpiredError:
@@ -75,7 +74,7 @@ async def add_account(event):
         password = event.text
         try:
             await client.sign_in(password=password)
-            await edit.edit("**• Successfuly LogIn!**")
-            await client.log_out()
+            buttons = [[Button.inline("• Yes •", data=f"yesedit:{phone}"), Button.inline("• No •", data=f"noedit:{phone}")]]
+            await edit.edit("**• Successfuly Login To Your Account!**\n\n**• Do You Want To Edit Your Account???**", buttons=buttons)
         except PasswordHashInvalidError:
             return await edit.edit("**• Your Account Password Is Invalid!**") 
