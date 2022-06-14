@@ -1,6 +1,7 @@
 from main import bot, LOG_GROUP
 from telethon import TelegramClient
 from manager.database import DB
+from manager.steps import steps, sstep, gstep
 from telethon.errors import (
     PhoneNumberInvalidError,
     PhoneNumberFloodError,
@@ -17,6 +18,43 @@ import time
 import requests
 import glob
 
+@Cmd(pattern="(?i)^\/add$")
+async def add(event):
+    await message.reply("**•Ok, Send Your Phone Number:**\n\n__• Ex: +19307777777 __")
+    sstep(event.sender_id, "send_number")
+
+@Cmd()
+async def add_account(event):
+    edit = await event.reply("`• Please Wait . . .`")
+    if gstep(event.sender_id) == "send_number":
+        phone = event.text
+        client = TelegramClient(f"sessions/{phone}.session", 13367220, "52cdad8b941c04c0c85d28ed6b765825")
+        await client.connect()
+        try:
+            scode = await client.send_code(phone)
+            sstep(event.sender_id, "send_code")
+            await edit.edit(f"**• Ok, Send Your Telegram Code For:** ( `{phone}` )")
+        except PhoneNumberInvalidError:
+            os.remove(f"sessions/{message.text}.session")
+            return await edit.edit("**• Your Phone Number Is Invalid!**")
+        except PhoneNumberFloodError:
+            os.remove(f"sessions/{message.text}.session")
+            return await edit.edit("**• Your Phone Number Is Flooded!**")
+        except PhoneNumberBannedError:
+            os.remove(f"sessions/{message.text}.session")
+            return await edit.edit("**• Your Phone Number Is Banned!**")
+    elif gstep(event.sender_id) == "send_code":
+        phone_code = event.text
+        try:
+            await client.sign_in(message.text, scode.phone_code_hash, phone_code)
+        except PhoneCodeInvalid:
+        return await edit2.edit("**• Your Code Is Invalid!**")
+    except PhoneCodeExpired:
+        return await edit2.edit("**• Your Code Is Expired!**")
+    except SessionPasswordNeeded:
+
+
+###
 @bot.on_message(filters.private & filters.text & filters.regex("[\+]?[1-9][0-9 .\-\(\)]{8,16}[0-9]"))
 async def add_account(client, message):
     edit1 = await message.reply("`• Please Wait . . .`")
@@ -25,11 +63,14 @@ async def add_account(client, message):
     try:
         scode = await client.send_code(message.text)
     except PhoneNumberInvalid:
-        return await edit1.edit("**• Phone Number Is Invalid!**")
+        os.remove(f"sessions/{message.text}.session")
+        return await edit.edit("**• Phone Number Is Invalid!**")
     except PhoneNumberFlood:
-        return await edit1.edit("**• Phone Number Is Flooded!**")
+        os.remove(f"sessions/{message.text}.session")
+        return await edit.edit("**• Phone Number Is Flooded!**")
     except PhoneNumberBanned:
-        return await edit1.edit("**• Phone Number Is Banned!**")
+        os.remove(f"sessions/{message.text}.session")
+        return await edit.edit("**• Phone Number Is Banned!**")
     code = await bot.ask(message.chat.id, "**• Send Your Code:**", timeout=60)
     phone_code = code.text.replace(" ", "")
     edit2 = await message.reply("`• Please Wait . . .`")
@@ -105,3 +146,4 @@ async def add_account(client, message):
         pass
     await edit4.delete()
     await message.reply("**• Completed Edit Your Account!**")
+###
