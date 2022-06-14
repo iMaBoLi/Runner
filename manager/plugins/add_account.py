@@ -36,12 +36,15 @@ async def add_account(event):
             sstep(event.sender_id, f"send_code:{phone}")
             await edit.edit(f"**• Ok, Send Your Telegram Code For:** ( `{phone}` )")
         except PhoneNumberInvalidError:
+            sstep(event.sender_id, "free")
             os.remove(f"sessions/{message.text}.session")
             return await edit.edit("**• Your Phone Number Is Invalid!**")
         except PhoneNumberFloodError:
+            sstep(event.sender_id, "free")
             os.remove(f"sessions/{message.text}.session")
             return await edit.edit("**• Your Phone Number Is Flooded!**")
         except PhoneNumberBannedError:
+            sstep(event.sender_id, "free")
             os.remove(f"sessions/{message.text}.session")
             return await edit.edit("**• Your Phone Number Is Banned!**")
     elif "send_code" in gstep(event.sender_id):
@@ -52,9 +55,10 @@ async def add_account(event):
         phone_code = event.text
         try:
             await client.sign_in(phone, phone_code)
-        except PhoneCodeInvalid:
-            return await edit.edit("**• Your Code Is Invalid!**")
-        except PhoneCodeExpired:
+        except PhoneCodeInvalidError:
+            return await edit.edit("**• Your Code Is Invalid!**\n\n__• Check Code Again!__")
+        except PhoneCodeExpiredError:
+            sstep(event.sender_id, "free")
             return await edit.edit("**• Your Code Is Expired!**")
         except SessionPasswordNeeded:
             return
