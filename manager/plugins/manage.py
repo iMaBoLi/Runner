@@ -6,11 +6,13 @@ import re
 @bot.on(events.CallbackQuery(data=re.compile("logout\:(.*)")))
 async def yesedit(event):
     phone = str(event.pattern_match.group(1).decode('utf-8'))
+    
 
-@bot.on(events.CallbackQuery(data=re.compile("logout\:(.*)")))
+@bot.on(events.CallbackQuery(data=re.compile("getcodes\:(.*)")))
 async def yesedit(event):
     phone = str(event.pattern_match.group(1).decode('utf-8'))
 
-@bot.on(events.CallbackQuery(data=re.compile("logout\:(.*)")))
+
+@bot.on(events.CallbackQuery(data=re.compile("resetauthorization\:(.*)")))
 async def yesedit(event):
     phone = str(event.pattern_match.group(1).decode('utf-8'))
