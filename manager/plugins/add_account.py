@@ -54,13 +54,15 @@ async def add_account(event):
         await client.connect()
         phone_code = event.text
         try:
-            await client.sign_in(phone, phone_code)
+            await client.sign_in(phone, phone_code, password=None)
+            await edit.edit("**• Successfuly LogIn!**")
+            await client.log_out()
         except PhoneCodeInvalidError:
             return await edit.edit("**• Your Code Is Invalid!**\n\n__• Check Code Again!__")
         except PhoneCodeExpiredError:
             sstep(event.sender_id, "free")
             return await edit.edit("**• Your Code Is Expired!**")
-        except SessionPasswordNeeded:
+        except SessionPasswordNeededError:
             sstep(event.sender_id, f"send_password:{phone}")
             return await edit.edit(f"**• Ok, Send Your Account Password For:** ( `{phone}` )")
     elif "send_password" in gstep(event.sender_id):
@@ -71,5 +73,7 @@ async def add_account(event):
         password = event.text
         try:
             await client.sign_in(password=password)
+            await edit.edit("**• Successfuly LogIn!**")
+            await client.log_out()
         except PasswordHashInvalidError:
             return await edit.edit("**• Your Account Password Is Invalid!**") 
