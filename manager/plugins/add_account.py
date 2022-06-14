@@ -1,4 +1,4 @@
-from main import bot, LOG_GROUP
+from manager import bot
 from telethon import TelegramClient
 from manager.database import DB
 from manager.steps import steps, sstep, gstep
@@ -48,8 +48,8 @@ async def add_account(event):
         try:
             await client.sign_in(phone, phone_code)
         except PhoneCodeInvalid:
-            return await edit2.edit("**• Your Code Is Invalid!**")
+            return await edit.edit("**• Your Code Is Invalid!**")
         except PhoneCodeExpired:
-            return await edit2.edit("**• Your Code Is Expired!**")
+            return await edit.edit("**• Your Code Is Expired!**")
         except SessionPasswordNeeded:
             return
