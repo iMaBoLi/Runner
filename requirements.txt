@@ -3,3 +3,4 @@ tgcrypto
 requests
 redis
 bs4
+Faker
