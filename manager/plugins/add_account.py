@@ -1,4 +1,5 @@
 from manager import bot
+from manager.events import Cmd
 from telethon import TelegramClient
 from manager.database import DB
 from manager.steps import steps, sstep, gstep
