@@ -22,8 +22,8 @@ def Cmd(
                 return
             try:
                 await func(event)
-            except Exception as e:
-                await bot.send_message(LOG_GROUP, f"**#Error**\n\n**• New Error:** ( `{e}` )")
+            except:
+                await bot.send_message(LOG_GROUP, f"**#Error**\n\n**• New Error:** ( `{format_exc()}` )")
         bot.add_event_handler(wrapper, events.MessageEdited(pattern=pattern, **kwargs))
         bot.add_event_handler(wrapper, events.NewMessage(pattern=pattern, **kwargs))
         return wrapper
