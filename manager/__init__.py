@@ -1,17 +1,17 @@
 from telethon import TelegramClient
-from decouple import config
 import sys
 
-API_ID = config("API_ID", default=None, cast=int)
-API_HASH = config("API_HASH", default=None)
-BOT_TOKEN = config("BOT_TOKEN", default=None)
-ADMIN_ID = config("ADMIN_ID", default=None, cast=int)
+API_ID = 18917792
+API_HASH = "1f1addf94481ee8ae1594ddc6ea78dfa"
+BOT_TOKEN = "5567035354:AAHxgm8GUR0k-cgXjyoTRsGlto_X_z0tGWM"
+LOG_GROUP = "MyLogAccManagerGroup"
+ADMIN_ID = 5250298585
 
 print("• Starting Bot . . .")
 
 try:
     bot = TelegramClient(
-        session="Bomber",
+        session="AccManager",
         api_id=API_ID,
         api_hash=API_HASH,
     ).start(bot_token=BOT_TOKEN)
