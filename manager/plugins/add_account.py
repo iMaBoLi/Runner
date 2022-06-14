@@ -32,7 +32,7 @@ async def add_account(event):
         client = TelegramClient(f"sessions/{phone}.session", 13367220, "52cdad8b941c04c0c85d28ed6b765825")
         await client.connect()
         try:
-            scode = await client.send_code(phone)
+            scode = await client.send_code_request(phone)
             sstep(event.sender_id, f"send_code:{phone}")
             await edit.edit(f"**• Ok, Send Your Telegram Code For:** ( `{phone}` )")
         except PhoneNumberInvalidError:
