@@ -1,7 +1,7 @@
 from manager import bot
 from manager.events import Cmd
 from manager.database import DB
-from manager.steps import sstep
+from manager.database.steps import sstep
 from . import main_menu
 
 @Cmd(pattern="(?i)^\/start$")
