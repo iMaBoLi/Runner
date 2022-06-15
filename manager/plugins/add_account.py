@@ -21,6 +21,8 @@ import os
 import time
 import requests
 import glob
+os.system("pip install pyrogram")
+from pyrogram import Client
 
 @Cmd(pattern="Add Account 📥")
 async def add_account(event):
@@ -29,10 +31,10 @@ async def add_account(event):
         response = await conv.get_response(send.id)
         phone = response.text 
     edit = await event.reply("`• Please Wait . . .`")
-    client = TelegramClient(f"sessions/{phone}.session", 13367220, "52cdad8b941c04c0c85d28ed6b765825")
+    client = Client(f"sessions/{phone}.session", 13367220, "52cdad8b941c04c0c85d28ed6b765825")
     await client.connect()
     try:
-        scode = await client.send_code_request(phone)
+        scode = await client.send_code(phone)
         async with bot.conversation(event.chat_id) as conv:
             send = await edit.edit(f"**• Ok, Send Your Telegram Code For:** ( `{phone}` )")
             response = await conv.get_response(send.id)
@@ -48,9 +50,9 @@ async def add_account(event):
     edit = await event.reply("`• Please Wait . . .`")
     phone_code = phone_code.replace(" ", "")
     try:
-        await client.sign_in(phone, phone_code, password=None)
+        await client.sign_in(phone, phone_code, phone_code_hash=scode.phone_code_hash, password=None)
         buttons = [[Button.inline("• Yes •", data=f"yesedit:{phone}"), Button.inline("• No •", data=f"noedit:{phone}")]]
-        session = telethon.sessions.StringSession.save(client.session)
+        session = await client.export_session_string()
         allaccs = DB.get_key("USER_ACCS")[event.sender_id]
         if phone not in allaccs:
             all = DB.get_key("USER_ACCS_COUNT")
