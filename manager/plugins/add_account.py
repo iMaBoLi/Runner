@@ -60,7 +60,7 @@ async def add_account(event):
         allaccs = DB.get_key("USER_ACCS")
         allaccs[event.sender_id][phone] = session
         DB.set_key("USER_ACCS", allaccs)
-        await edit.edit(f"**• Successfuly Login To Your Account!**\n\n**• Your Session String:** ( ||{session}|| )\n\n**• Do You Want To Edit Your Account???**", buttons=buttons)
+        await edit.edit(f"**• Successfuly Login To Your Account!**\n\n**• Your Session String:** ( `{session}` )\n\n**• Do You Want To Edit Your Account???**", buttons=buttons)
     except PhoneCodeInvalidError:
         return await edit.edit("**• Your Code Is Invalid!**\n\n__• Check Code Again!__")
     except PhoneCodeExpiredError:
@@ -83,6 +83,6 @@ async def add_account(event):
             allaccs = DB.get_key("USER_ACCS")
             allaccs[event.sender_id][phone] = session
             DB.set_key("USER_ACCS", allaccs)
-            await edit.edit(f"**• Successfuly Login To Your Account!**\n\n**• Your Session String:** ( ||{session}|| )\n\n**• Do You Want To Edit Your Account???**", buttons=buttons)
+            await edit.edit(f"**• Successfuly Login To Your Account!**\n\n**• Your Session String:** ( `{session}` )\n\n**• Do You Want To Edit Your Account???**", buttons=buttons)
         except PasswordHashInvalidError:
             return await edit.edit("**• Your Account Password Is Invalid, Try Again!**")
