@@ -1,6 +1,7 @@
 from manager import bot
 from manager.events import Cmd
 from telethon import TelegramClient, Button
+import telethon
 from telethon.sessions import StringSession
 from manager.database import DB
 from . import main_menu, back_menu
@@ -49,7 +50,7 @@ async def add_account(event):
     try:
         await client.sign_in(phone, phone_code, password=None)
         buttons = [[Button.inline("• Yes •", data=f"yesedit:{phone}"), Button.inline("• No •", data=f"noedit:{phone}")]]
-        session = client.session.save()
+        session = telethon.sessions.StringSession.save(client.session)
         allaccs = DB.get_key("USER_ACCS")[event.sender_id]
         if phone not in allaccs:
             all = DB.get_key("USER_ACCS_COUNT")
@@ -72,7 +73,7 @@ async def add_account(event):
         try:
             await client.sign_in(password=password)
             buttons = [[Button.inline("• Yes •", data=f"yesedit:{phone}"), Button.inline("• No •", data=f"noedit:{phone}")]]
-            session = client.session.save()
+            session = telethon.sessions.StringSession.save(client.session)
             allaccs = DB.get_key("USER_ACCS")[event.sender_id]
             if phone not in allaccs:
                 all = DB.get_key("USER_ACCS_COUNT")
