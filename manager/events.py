@@ -19,10 +19,10 @@ def Cmd(
                 USERS.append(event.sender_id)
                 DB.set_key("BOT_USERS", USERS)
 
-            ACC_COUNT = DB.get_key("USER_ACC_COUNT") or {}
+            ACC_COUNT = DB.get_key("USER_ACCS_COUNT") or {}
             if event.sender_id not in ACC_COUNT:                 
                 ACC_COUNT.update({event.sender_id: 0})
-                DB.set_key("USER_ACC_COUNT", ACC_COUNT)
+                DB.set_key("USER_ACCS_COUNT", ACC_COUNT)
 
             USER_ACCS = DB.get_key("USER_ACCS") or {}
             if event.sender_id not in USER_ACCS:                 
