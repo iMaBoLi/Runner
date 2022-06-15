@@ -3,7 +3,7 @@ from manager.events import Cmd
 from telethon import TelegramClient, Button
 from manager.database import DB
 from . import main_menu, back_menu
-from manager.steps import steps, sstep, gstep
+from manager.database.steps import steps, sstep, gstep
 from telethon.errors import (
     PhoneNumberInvalidError,
     PhoneNumberFloodError,
