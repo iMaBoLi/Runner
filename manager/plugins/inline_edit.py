@@ -24,26 +24,24 @@ async def yesedit(event):
     if DB.get_key("CHANGE_ACCS_FNAME")[event.sender_id] == "yes":
         try:
             await client(UpdateProfileRequest(first_name=fake.first_name()))
-        except Exception as e:
-            print(e)
+        except:
             pass
     if DB.get_key("CHANGE_ACCS_LNAME")[event.sender_id] == "yes":
         try:
             await client(UpdateProfileRequest(last_name=fake.last_name()))
-        except Exception as e:
-            print(e)
+        except:
             pass
     if DB.get_key("CHANGE_ACCS_BIO")[event.sender_id] == "yes":
         try:
             await client(UpdateProfileRequest(about=fake.text().split(".")[0]))
-        except Exception as e:
-            print(e)
+        except:
             pass
     if DB.get_key("CHANGE_ACCS_USERNAME")[event.sender_id] == "yes":
         try:
             username = fake.first_name() + "_" + fake.last_name() + str(random.randint(100, 999))
-            await client(UpdateUsernameRequest(username=username))
-        except:
+            await client(UpdateUsernameRequest(username))
+        except Exception as e:
+            print(e)
             pass
     if DB.get_key("CHANGE_ACCS_PHOTO")[event.sender_id] == "yes":
         try:
@@ -54,7 +52,8 @@ async def yesedit(event):
             file = await client.upload_file("photo.jpg")
             await client(UploadProfilePhotoRequest(file=file))
             os.remove("photo.jpg")
-        except:
+        except Exception as e:
+            print(e)
             pass
     await event.edit(f"**• Accoutn Successfuly Edited And Manage Menu Send For You:**\n\n__• Dont Delete This Menu!__")
     await event.reply(f"""
