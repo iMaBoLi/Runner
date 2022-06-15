@@ -5,7 +5,7 @@ from manager.database import DB
 import re
 import random
 
-@Cmd(pattern="Accs Setting ⚙️")
+@Cmd(pattern="Account Settings ⚙️")
 async def acc_settings(event):
     ch_fname = "✅" if DB.get_key("CHANGE_ACCS_FNAME")[event.sender_id] == "yes" else "❌"
     ch_lname = "✅" if DB.get_key("CHANGE_ACCS_LNAME")[event.sender_id] == "yes" else "❌"
@@ -59,4 +59,3 @@ async def change_set(event):
         [Button.inline(f"{ch_photo} Photo {ch_photo}", data=f"ch_photo:{event.sender_id}")],
     ]
     await event.edit(buttons=buttons)
-    await event.answer("• Successfuly Changed!", alert=True)
