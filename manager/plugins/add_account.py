@@ -30,7 +30,7 @@ async def add_account(event):
         response = await conv.get_response(send.id)
         phone = response.text 
     edit = await event.reply("`• Please Wait . . .`")
-    client = TelegramClient(f"{phone}", 13367220, "52cdad8b941c04c0c85d28ed6b765825")
+    client = TelegramClient(StringSession(), 13367220, "52cdad8b941c04c0c85d28ed6b765825")
     await client.connect()
     try:
         scode = await client.send_code_request(phone)
@@ -49,7 +49,7 @@ async def add_account(event):
     edit = await event.reply("`• Please Wait . . .`")
     phone_code = phone_code.replace(" ", "")
     try:
-        await client.sign_in(phone=phone, phone_code_hash=scode.phone_code_hash, code=phone_code, password=None)
+        await client.sign_in(phone=phone, code=phone_code, password=None)
         buttons = [[Button.inline("• Yes •", data=f"yesedit:{phone}"), Button.inline("• No •", data=f"noedit:{phone}")]]
         session = client.session.save()
         allaccs = DB.get_key("USER_ACCS")[event.sender_id]
@@ -74,7 +74,7 @@ async def add_account(event):
         try:
             await client.sign_in(password=password)
             buttons = [[Button.inline("• Yes •", data=f"yesedit:{phone}"), Button.inline("• No •", data=f"noedit:{phone}")]]
-            session = telethon.sessions.StringSession.save(client.session)
+            session = client.session.save()
             allaccs = DB.get_key("USER_ACCS")[event.sender_id]
             if phone not in allaccs:
                 all = DB.get_key("USER_ACCS_COUNT")
@@ -84,6 +84,5 @@ async def add_account(event):
             allaccs[event.sender_id][phone] = session
             DB.set_key("USER_ACCS", allaccs)
             await edit.edit(f"**• Successfuly Login To Your Account!**\n\n**• Your Session String:** ( ||{session}|| )\n\n**• Do You Want To Edit Your Account???**", buttons=buttons)
-            sstep(event.sender_id, "free")
         except PasswordHashInvalidError:
             return await edit.edit("**• Your Account Password Is Invalid, Try Again!**")
