@@ -1,4 +1,5 @@
-git+https://github.com/Craboli83/Telethon
+telethon
+pyrogram
 tgcrypto
 requests
 redis
