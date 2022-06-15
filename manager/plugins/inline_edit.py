@@ -5,8 +5,9 @@ from manager.database import DB
 from telethon.tl.functions.account import UpdateProfileRequest, UpdateUsernameRequest
 from telethon.tl.functions.photos import UpdateProfilePhotoRequest
 from faker import Faker
-from manager.functions import search_photo, create_file, delete_file
+from manager.functions import search_photo
 import re
+import requests
 import random
 
 @bot.on(events.CallbackQuery(data=re.compile("yesedit\:(.*)")))
