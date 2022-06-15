@@ -31,7 +31,7 @@ async def add_account(event):
         response = await conv.get_response(send.id)
         phone = response.text 
     edit = await event.reply("`• Please Wait . . .`")
-    client = Client(f"{phone}", 13367220, "52cdad8b941c04c0c85d28ed6b765825")
+    client = Client(f"{phone}", 13367220, "52cdad8b941c04c0c85d28ed6b765825", in_memory=True)
     await client.connect()
     try:
         scode = await client.send_code(phone)
@@ -50,7 +50,7 @@ async def add_account(event):
     edit = await event.reply("`• Please Wait . . .`")
     phone_code = phone_code.replace(" ", "")
     try:
-        await client.sign_in(phone, phone_code, phone_code_hash=scode.phone_code_hash, password=None)
+        await client.sign_in(phone, phone_code_hash=scode.phone_code_hash, phone_code)
         buttons = [[Button.inline("• Yes •", data=f"yesedit:{phone}"), Button.inline("• No •", data=f"noedit:{phone}")]]
         session = await client.export_session_string()
         allaccs = DB.get_key("USER_ACCS")[event.sender_id]
