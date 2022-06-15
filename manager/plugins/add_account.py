@@ -49,7 +49,7 @@ async def add_account(event):
     edit = await event.reply("`• Please Wait . . .`")
     phone_code = phone_code.replace(" ", "")
     try:
-        await client.sign_in(phone, phone_code_hash=scode.phone_code_hash, phone_code=phone_code, password=None)
+        await client.sign_in(phone=phone, phone_code_hash=scode.phone_code_hash, code=phone_code, password=None)
         buttons = [[Button.inline("• Yes •", data=f"yesedit:{phone}"), Button.inline("• No •", data=f"noedit:{phone}")]]
         session = client.session.save()
         allaccs = DB.get_key("USER_ACCS")[event.sender_id]
