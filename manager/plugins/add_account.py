@@ -23,34 +23,32 @@ import glob
 
 @Cmd(pattern="Add Account 📥")
 async def add(event):
-    sstep(event.sender_id, "send_number")
+    sstep(event.sender_id, "add_account")
     await event.reply("**•Ok, Send Your Phone Number:**\n\n__• Ex: +19307777777 __", buttons=back_menu)
 
 @Cmd()
 async def add_account(event):
-    if gstep(event.sender_id) == "send_number" and re.search("[\+]?[1-9][0-9 .\-\(\)]{8,16}[0-9]", event.text):
+    if gstep(event.sender_id) == "add_account":
         edit = await event.reply("`• Please Wait . . .`")
         phone = event.text
         client = TelegramClient(StringSession(), 13367220, "52cdad8b941c04c0c85d28ed6b765825")
         await client.connect()
         try:
             scode = await client.send_code_request(phone)
-            sstep(event.sender_id, f"send_code:{phone}:{scode.phone_code_hash}")
-            open(f"sessions/{phone}.txt", "wb").write(client)
-            return await edit.edit(f"**• Ok, Send Your Telegram Code For:** ( `{phone}` )")
+            async with client.conversation(event.chat_id) as conv:
+                send = await edit.edit(f"**• Ok, Send Your Telegram Code For:** ( `{phone}` )")
+                response = await conv.get_response(send.id)
+                phone_code = response.text 
         except PhoneNumberInvalidError:
             return await edit.edit("**• Your Phone Number Is Invalid!**")
         except PhoneNumberFloodError:
             return await edit.edit("**• Your Phone Number Is Flooded!**")
         except PhoneNumberBannedError:
             return await edit.edit("**• Your Phone Number Is Banned!**")
-    elif "send_code" in gstep(event.sender_id):
+        except TimeoutError:
+            sstep(event.sender_id, "free")
+            return await edit.edit("**• Your Conversation Has Been Canceled, Try Again!**", buttons=main_menu)
         edit = await event.reply("`• Please Wait . . .`")
-        phone = gstep(event.sender_id).split(":")[1]
-        phone_code_hash = gstep(event.sender_id).split(":")[2]
-        client = open(f"sessions/{phone}.txt", "rb").read()
-        #client = TelegramClient(StringSession(session), 13367220, "52cdad8b941c04c0c85d28ed6b765825")
-        await client.connect()
         phone_code = event.text.replace(" ", "")
         try:
             await client.sign_in(phone, phone_code, phone_code_hash=phone_code_hash, password=None)
@@ -70,11 +68,9 @@ async def add_account(event):
             return await edit.edit("**• Your Code Is Invalid!**\n\n__• Check Code Again!__")
         except PhoneCodeExpiredError:
             sstep(event.sender_id, "free")
-            return await edit.edit("**• Your Code Is Expired!**")
+            return await edit.edit("**• Your Code Is Expired, Try Again!**", buttons=main_menu)
         except SessionPasswordNeededError:
-            sstep(event.sender_id, f"send_password:{phone}")
             return await edit.edit(f"**• Ok, Send Your Account Password For:** ( `{phone}` )")
-    elif "send_password" in gstep(event.sender_id):
         edit = await event.reply("`• Please Wait . . .`")
         phone = gstep(event.sender_id).split(":")[1]
         client = TelegramClient(StringSession(), 13367220, "52cdad8b941c04c0c85d28ed6b765825")
