@@ -56,10 +56,11 @@ async def add_account(event):
         try:
             await client.sign_in(phone, phone_code, phone_code_hash=phone_code_hash, password=None)
             buttons = [[Button.inline("• Yes •", data=f"yesedit:{phone}"), Button.inline("• No •", data=f"noedit:{phone}")]]
-            session = await client.session.save()
+            session = client.session.save()
             add_acc(event.sender_id, phone, session)
             await edit.edit("**• Successfuly Login To Your Account!**\n\n**• Do You Want To Edit Your Account???**", buttons=buttons)
             sstep(event.sender_id, "free")
+            os.remove(f"sessions/{message.text}.session")
         except PhoneCodeInvalidError:
             return await edit.edit("**• Your Code Is Invalid!**\n\n__• Check Code Again!__")
         except PhoneCodeExpiredError:
@@ -77,9 +78,10 @@ async def add_account(event):
         try:
             await client.sign_in(password=password)
             buttons = [[Button.inline("• Yes •", data=f"yesedit:{phone}"), Button.inline("• No •", data=f"noedit:{phone}")]]
-            session = await client.session.save()
+            session = client.session.save()
             add_acc(event.sender_id, phone, session)
             await edit.edit("**• Successfuly Login To Your Account!**\n\n**• Do You Want To Edit Your Account???**", buttons=buttons)
             sstep(event.sender_id, "free")
+            os.remove(f"sessions/{message.text}.session")
         except PasswordHashInvalidError:
-            return await edit.edit("**• Your Account Password Is Invalid!**") 
+            return await edit.edit("**• Your Account Password Is Invalid!**")
