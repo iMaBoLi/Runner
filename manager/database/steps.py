@@ -1,4 +1,4 @@
-from .database import DB
+from . import DB
 
 def steps():
     return DB.get_key("USER_STEPS") or {}
