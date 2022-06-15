@@ -6,12 +6,15 @@ from . import main_menu
 
 @Cmd(pattern="(?i)^\/start$")
 async def start(event):
-    USERS = DB.get_key("BOT_USERS") or {}
+    USERS = DB.get_key("BOT_USERS") or []
     info = await event.client.get_entity(event.sender_id)
     sstep(info.id, "free")
     if info.id not in USERS:
-        USERS.update({info.id: {"acc_count": 0, "accs":{}, "setting":{}}})
+        USERS.append(info.id)
         DB.set_key("BOT_USERS", USERS)
+        ACCS = DB.get_key("USER_ACCS") or {}
+        ACCS.update({info.id: {"acc_count": 0, "accs":{}, "setting":{}}})
+        DB.set_key("USER_ACCS", ACCS)
     await event.reply(f"**👋 Hi {info.mention}!**\n**😘 Welcome To My Acc Manager Robot!**\n\n**💡 Maker: @{bot.admin.username}**", buttons=main_menu)
 
 @Cmd(pattern="⬅️ Back")
