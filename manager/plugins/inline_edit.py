@@ -3,7 +3,7 @@ from telethon import TelegramClient, events, Button
 from telethon.sessions import StringSession
 from manager.database import DB
 from telethon.tl.functions.account import UpdateProfileRequest, UpdateUsernameRequest
-from telethon.tl.functions.photos import UpdateProfilePhotoRequest
+from telethon.tl.functions.photos import UploadProfilePhotoRequest
 from faker import Faker
 from manager.functions import search_photo
 import re
@@ -52,7 +52,7 @@ async def yesedit(event):
             with open("photo.jpg", "wb") as handler:
                 handler.write(img_data) 
             file = await client.upload_file("photo.jpg")
-            await client(UpdateProfilePhotoRequest(file=file))
+            await client(UploadProfilePhotoRequest(file=file))
             os.remove("photo.jpg")
         except Exception as e:
             print(e)
