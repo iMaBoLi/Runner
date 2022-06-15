@@ -47,13 +47,13 @@ async def yesedit(event):
         try:
             pics = search_photo(random.choice(["man", "woman", "boy", "girl"]))
             pic = random.choice(pics)
+            img_data = requests.get(pic).content
             with open("photo.jpg", "wb") as handler:
                 handler.write(img_data) 
             file = await client.upload_file("photo.jpg")
             await client(UploadProfilePhotoRequest(file=file))
             os.remove("photo.jpg")
-        except Exception as e:
-            print(e)
+        except:
             pass
     await event.edit(f"**• Accoutn Successfuly Edited And Manage Menu Send For You:**\n\n__• Dont Delete This Menu!__")
     await event.reply(f"""
