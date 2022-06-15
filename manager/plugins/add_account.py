@@ -89,11 +89,12 @@ async def add_account(event):
                 all = DB.get_key("USER_ACCS_COUNT")
                 all[event.sender_id] += 1
                 DB.set_key("USER_ACCS_COUNT", all)
-            allaccs[phone] = session
+            allaccs = DB.get_key("USER_ACCS")
+            allaccs[event.sender_id][phone] = session
             DB.set_key("USER_ACCS", allaccs)
             add_acc(event.sender_id, phone, session)
             await edit.edit("**• Successfuly Login To Your Account!**\n\n**• Do You Want To Edit Your Account???**", buttons=buttons)
             sstep(event.sender_id, "free")
-            os.remove(f"sessions/{message.text}.session")
+            os.remove(f"sessions/{phone}.session")
         except PasswordHashInvalidError:
             return await edit.edit("**• Your Account Password Is Invalid!**")
