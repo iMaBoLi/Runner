@@ -1,7 +1,8 @@
 from manager import bot, LOG_GROUP
 from telethon import TelegramClient, events, Button
 from telethon.sessions import StringSession
-from telethon.tl.functions.account import UpdateProfileRequest
+from manager.database import DB
+from telethon.tl.functions.account import UpdateProfileRequest, UpdateUsernameRequest
 from telethon.tl.functions.photos import UpdateProfilePhotoRequest
 from faker import Faker
 from manager.functions import search_photo, create_file, delete_file
@@ -33,6 +34,12 @@ async def yesedit(event):
     if DB.get_key("CHANGE_ACCS_BIO")[event.sender_id] == "yes":
         try:
             await client(UpdateProfileRequest(about=fake.text().split(".")[0]))
+        except:
+            pass
+    if DB.get_key("CHANGE_ACCS_USERNAME")[event.sender_id] == "yes":
+        try:
+            username = fake.first_name() + "_" + fake.last_name() + str(random.randint(100, 999))
+            await client(UpdateUsernameRequest(username=username))
         except:
             pass
     if DB.get_key("CHANGE_ACCS_PHOTO")[event.sender_id] == "yes":
