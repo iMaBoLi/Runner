@@ -14,15 +14,15 @@ def Cmd(
     def decorator(func):
         async def wrapper(event):
 
-            USERS = DB.get_key("BOT_USERS") or []
-            if event.sender_id not in USERS:
-                USERS.append(event.sender_id)
-                DB.set_key("BOT_USERS", USERS)
+            BOT_USERS = DB.get_key("BOT_USERS") or []
+            if event.sender_id not in BOT_USERS:
+                BOT_USERS.append(event.sender_id)
+                DB.set_key("BOT_USERS", BOT_USERS)
 
-            ACC_COUNT = DB.get_key("USER_ACCS_COUNT") or {}
-            if event.sender_id not in ACC_COUNT:                 
-                ACC_COUNT.update({event.sender_id: 0})
-                DB.set_key("USER_ACCS_COUNT", ACC_COUNT)
+            USER_ACCS_COUNT = DB.get_key("USER_ACCS_COUNT") or {}
+            if event.sender_id not in USER_ACCS_COUNT:                 
+                USER_ACCS_COUNT.update({event.sender_id: 0})
+                DB.set_key("USER_ACCS_COUNT", USER_ACCS_COUNT)
 
             USER_ACCS = DB.get_key("USER_ACCS") or {}
             if event.sender_id not in USER_ACCS:                 
@@ -53,11 +53,6 @@ def Cmd(
             if event.sender_id not in CHANGE_ACCS_PHOTO:                 
                 CHANGE_ACCS_PHOTO.update({event.sender_id: "yes"})
                 DB.set_key("CHANGE_ACCS_PHOTO", CHANGE_ACCS_PHOTO)
-
-            CHANGE_ACCS_PHOTO_COUNT = DB.get_key("CHANGE_ACCS_PHOTO_COUNT") or {}
-            if event.sender_id not in CHANGE_ACCS_PHOTO_COUNT:                 
-                CHANGE_ACCS_PHOTO_COUNT.update({event.sender_id: 3})
-                DB.set_key("CHANGE_ACCS_PHOTO_COUNT", CHANGE_ACCS_PHOTO_COUNT)
 
             if not event.is_private or event.out:
                 return
