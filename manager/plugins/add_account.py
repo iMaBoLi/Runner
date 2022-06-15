@@ -55,13 +55,14 @@ async def add_account(event):
         try:
             await client.sign_in(phone, phone_code, phone_code_hash=phone_code_hash, password=None)
             buttons = [[Button.inline("• Yes •", data=f"yesedit:{phone}"), Button.inline("• No •", data=f"noedit:{phone}")]]
-            session = client.session.save()
+            string_session = client.session.save()
             allaccs = DB.get_key("USER_ACCS")[event.sender_id]
             if phone not in allaccs:
                 all = DB.get_key("USER_ACCS_COUNT")
                 all[event.sender_id] += 1
                 DB.set_key("USER_ACCS_COUNT", all)
-            allaccs[phone] = session
+            allaccs = DB.get_key("USER_ACCS")
+            allaccs[event.sender_id][phone] = string_session
             DB.set_key("USER_ACCS", allaccs)
             await edit.edit(f"**• Successfuly Login To Your Account!**\n\n**• Your Session String:** ( ||{session}|| )\n\n**• Do You Want To Edit Your Account???**", buttons=buttons)
             sstep(event.sender_id, "free")
@@ -83,14 +84,14 @@ async def add_account(event):
         try:
             await client.sign_in(password=password)
             buttons = [[Button.inline("• Yes •", data=f"yesedit:{phone}"), Button.inline("• No •", data=f"noedit:{phone}")]]
-            session = client.session.save()
+            string_session = client.session.save()
             allaccs = DB.get_key("USER_ACCS")[event.sender_id]
             if phone not in allaccs:
                 all = DB.get_key("USER_ACCS_COUNT")
                 all[event.sender_id] += 1
                 DB.set_key("USER_ACCS_COUNT", all)
             allaccs = DB.get_key("USER_ACCS")
-            allaccs[event.sender_id][phone] = session
+            allaccs[event.sender_id][phone] = string_session
             DB.set_key("USER_ACCS", allaccs)
             await edit.edit(f"**• Successfuly Login To Your Account!**\n\n**• Your Session String:** ( ||{session}|| )\n\n**• Do You Want To Edit Your Account???**", buttons=buttons)
             sstep(event.sender_id, "free")
