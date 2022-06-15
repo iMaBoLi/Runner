@@ -2,7 +2,7 @@ from manager import bot
 from manager.events import Cmd
 from telethon import TelegramClient, Button
 from manager.database import DB
-from . importt main_menu, back_menu
+from . import main_menu, back_menu
 from manager.steps import steps, sstep, gstep
 from telethon.errors import (
     PhoneNumberInvalidError,
