@@ -31,7 +31,7 @@ async def add_account(event):
         response = await conv.get_response(send.id)
         phone = response.text 
     edit = await event.reply("`• Please Wait . . .`")
-    client = Client(f"sessions/{phone}.session", 13367220, "52cdad8b941c04c0c85d28ed6b765825")
+    client = Client(f"{phone}", 13367220, "52cdad8b941c04c0c85d28ed6b765825")
     await client.connect()
     try:
         scode = await client.send_code(phone)
