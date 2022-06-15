@@ -17,7 +17,7 @@ async def yesedit(event):
         [Button.inline("• Reset Authorization •", data=f"resetauthorization:{phone}")],
         [Button.inline("• Receive Codes •", data=f"getcodes:{phone}")],
     ]
-    sesion = DB.get_key("USER_ACCS")[event.sender_id][phone]
+    session = DB.get_key("USER_ACCS")[event.sender_id][phone]
     client = TelegramClient(StringSession(session), 13367220, "52cdad8b941c04c0c85d28ed6b765825")
     await client.connect()
     fake = Faker()
