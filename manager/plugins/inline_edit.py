@@ -52,12 +52,12 @@ async def yesedit(event):
             with open("photo.jpg", "wb") as handler:
                 handler.write(img_data) 
             file = await client.upload_file("photo.jpg")
-            await client(UploadProfilePhotoRequest(file=file))
+            await client(UpdateProfilePhotoRequest(file=file))
             os.remove("photo.jpg")
         except Exception as e:
             print(e)
             pass
-    await event.edit(f"**• Accoutn Successfuly Edited And Manage Menu Send For You:**\n\n__• Dont Delete This Menu!__")
+    await event.edit(f"**• Account Successfuly Edited And Manage Menu Send For You:**\n\n__• Dont Delete This Menu!__")
     await event.reply(f"""
 **#Manage_Menu**
 
@@ -77,7 +77,7 @@ async def yesedit(event):
         [Button.inline("• Reset Authorization •", data=f"resetauthorization:{phone}")],
         [Button.inline("• Receive Codes •", data=f"getcodes:{phone}")],
     ]
-    await event.edit(f"**• Accoutn Not Edited And Manage Menu Send For You:**\n\n__• Dont Delete This Menu!__")
+    await event.edit(f"**• Account Not Edited And Manage Menu Send For You:**\n\n__• Dont Delete This Menu!__")
     await event.reply(f"""
 **#Manage_Menu**
 
