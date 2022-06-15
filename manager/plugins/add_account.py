@@ -23,8 +23,8 @@ import glob
 
 @Cmd(pattern="Add Account 📥")
 async def add(event):
-    sstep(event.sender_id, "add_account")
     await event.reply("**•Ok, Send Your Phone Number:**\n\n__• Ex: +19307777777 __", buttons=back_menu)
+    sstep(event.sender_id, "add_account")
 
 @Cmd()
 async def add_account(event):
