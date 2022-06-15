@@ -42,5 +42,4 @@ async def change_set(event):
         [Button.inline(f"{ch_uname} Change Username {ch_uname}", data=f"ch_uname:{event.sender_id}")],
         [Button.inline(f"{ch_photo} Change Photo {ch_photo}", data=f"ch_photo:{event.sender_id}")],
     ]
-    event.buttons = buttons
-    await event.edit(event)
+    await event.edit(event, buttons=buttons)
