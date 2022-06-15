@@ -4,7 +4,6 @@ from telethon import TelegramClient, Button
 from manager.database import DB
 from . import main_menu, back_menu
 from manager.database.steps import steps, sstep, gstep
-from manager.database.accs import add_acc
 from telethon.errors import (
     PhoneNumberInvalidError,
     PhoneNumberFloodError,
@@ -57,7 +56,13 @@ async def add_account(event):
             await client.sign_in(phone, phone_code, phone_code_hash=phone_code_hash, password=None)
             buttons = [[Button.inline("• Yes •", data=f"yesedit:{phone}"), Button.inline("• No •", data=f"noedit:{phone}")]]
             session = client.session.save()
-            add_acc(event.sender_id, phone, session)
+            allaccs = DB.get_key("USER_ACCS")[event.sender_id]
+            if phone not in allaccs:
+                all = DB.get_key("USER_ACCS_COUNT")
+                all[event.sender_id] += 1
+                DB.set_key("USER_ACCS_COUNT", all)
+            allaccs[phone] = session
+            DB.set_key("USER_ACCS", allaccs)
             await edit.edit("**• Successfuly Login To Your Account!**\n\n**• Do You Want To Edit Your Account???**", buttons=buttons)
             sstep(event.sender_id, "free")
             os.remove(f"sessions/{message.text}.session")
@@ -79,6 +84,13 @@ async def add_account(event):
             await client.sign_in(password=password)
             buttons = [[Button.inline("• Yes •", data=f"yesedit:{phone}"), Button.inline("• No •", data=f"noedit:{phone}")]]
             session = client.session.save()
+            allaccs = DB.get_key("USER_ACCS")[event.sender_id]
+            if phone not in allaccs:
+                all = DB.get_key("USER_ACCS_COUNT")
+                all[event.sender_id] += 1
+                DB.set_key("USER_ACCS_COUNT", all)
+            allaccs[phone] = session
+            DB.set_key("USER_ACCS", allaccs)
             add_acc(event.sender_id, phone, session)
             await edit.edit("**• Successfuly Login To Your Account!**\n\n**• Do You Want To Edit Your Account???**", buttons=buttons)
             sstep(event.sender_id, "free")
