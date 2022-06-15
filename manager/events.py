@@ -1,5 +1,6 @@
 from . import bot, LOG_GROUP
 from telethon import events
+from manager.database import DB
 from traceback import format_exc
 import os
 import sys
@@ -12,11 +13,53 @@ def Cmd(
 ):
     def decorator(func):
         async def wrapper(event):
-            if not event.is_private:
-                return
-            if event.out:
-                return
-            if event.fwd_from and event.via_bot_id:
+
+            USERS = DB.get_key("BOT_USERS") or []
+            if event.sender_id not in USERS:
+                USERS.append(event.sender_id)
+                DB.set_key("BOT_USERS", USERS)
+
+            ACC_COUNT = DB.get_key("USER_ACC_COUNT") or {}
+            if event.sender_id not in ACC_COUNT:                 
+                ACC_COUNT.update({event.sender_id: 0})
+                DB.set_key("USER_ACC_COUNT", ACC_COUNT)
+
+            USER_ACCS = DB.get_key("USER_ACCS") or {}
+            if event.sender_id not in USER_ACCS:                 
+                USER_ACCS.update({event.sender_id: {}})
+                DB.set_key("USER_ACCS", USER_ACCS)
+
+            CHENGE_ACCS_FNAME = DB.get_key("CHENGE_ACCS_FNAME") or {}
+            if event.sender_id not in CHENGE_ACCS_FNAME:                 
+                CHENGE_ACCS_FNAME.update({event.sender_id: "yes"})
+                DB.set_key("CHENGE_ACCS_FNAME", CHENGE_ACCS_FNAME)
+
+            CHENGE_ACCS_LNAME = DB.get_key("CHENGE_ACCS_LNAME") or {}
+            if event.sender_id not in CHENGE_ACCS_LNAME:                 
+                CHENGE_ACCS_LNAME.update({event.sender_id: "yes"})
+                DB.set_key("CHENGE_ACCS_LNAME", CHENGE_ACCS_LNAME)
+
+            CHENGE_ACCS_BIO = DB.get_key("CHENGE_ACCS_BIO") or {}
+            if event.sender_id not in CHENGE_ACCS_BIO:                 
+                CHENGE_ACCS_BIO.update({event.sender_id: "yes"})
+                DB.set_key("CHENGE_ACCS_BIO", CHENGE_ACCS_BIO)
+
+            CHENGE_ACCS_USERNAME = DB.get_key("CHENGE_ACCS_USERNAME") or {}
+            if event.sender_id not in CHENGE_ACCS_USERNAME:                 
+                CHENGE_ACCS_USERNAME.update({event.sender_id: "yes"})
+                DB.set_key("CHENGE_ACCS_USERNAME", CHENGE_ACCS_USERNAME)
+
+            CHENGE_ACCS_PHOTO = DB.get_key("CHENGE_ACCS_PHOTO") or {}
+            if event.sender_id not in CHENGE_ACCS_PHOTO:                 
+                CHENGE_ACCS_PHOTO.update({event.sender_id: "yes"})
+                DB.set_key("CHENGE_ACCS_PHOTO", CHENGE_ACCS_PHOTO)
+
+            CHENGE_ACCS_PHOTO_COUNT = DB.get_key("CHENGE_ACCS_PHOTO_COUNT") or {}
+            if event.sender_id not in CHENGE_ACCS_PHOTO_COUNT:                 
+                CHENGE_ACCS_PHOTO_COUNT.update({event.sender_id: 3})
+                DB.set_key("CHENGE_ACCS_PHOTO_COUNT", CHENGE_ACCS_PHOTO_COUNT)
+
+            if not event.is_private or event.out:
                 return
             if admin_only and event.sender_id != bot.admin.id:
                 return
