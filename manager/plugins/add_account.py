@@ -23,7 +23,7 @@ import glob
 
 @Cmd(pattern="Add Account 📥")
 async def add_account(event):
-    async with client.conversation(event.chat_id) as conv:
+    async with bot.conversation(event.chat_id) as conv:
         send = await event.reply("**•Ok, Send Your Phone Number:**\n\n__• Ex: +19307777777 __", buttons=back_menu)
         response = await conv.get_response(send.id)
         phone = response.text 
@@ -32,7 +32,7 @@ async def add_account(event):
     await client.connect()
     try:
         scode = await client.send_code_request(phone)
-        async with client.conversation(event.chat_id) as conv:
+        async with bot.conversation(event.chat_id) as conv:
             send = await edit.edit(f"**• Ok, Send Your Telegram Code For:** ( `{phone}` )")
             response = await conv.get_response(send.id)
             phone_code = response.text 
@@ -64,7 +64,7 @@ async def add_account(event):
     except PhoneCodeExpiredError:
         return await edit.edit("**• Your Code Is Expired, Try Again!**", buttons=main_menu)
     except SessionPasswordNeededError:
-        async with client.conversation(event.chat_id) as conv:
+        async with bot.conversation(event.chat_id) as conv:
             send = await edit.edit(f"**• Ok, Send Your Account Password For:** ( `{phone}` )")
             response = await conv.get_response(send.id)
             password = response.text  
