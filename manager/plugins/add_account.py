@@ -2,6 +2,7 @@ from manager import bot
 from manager.events import Cmd
 from telethon import TelegramClient, Button
 from manager.database import DB
+from . importt main_menu, back_menu
 from manager.steps import steps, sstep, gstep
 from telethon.errors import (
     PhoneNumberInvalidError,
@@ -19,10 +20,10 @@ import time
 import requests
 import glob
 
-@Cmd(pattern="(?i)^\/add$")
+@Cmd(pattern="Add Account 📥")
 async def add(event):
     sstep(event.sender_id, "send_number")
-    await event.reply("**•Ok, Send Your Phone Number:**\n\n__• Ex: +19307777777 __")
+    await event.reply("**•Ok, Send Your Phone Number:**\n\n__• Ex: +19307777777 __", buttons=back_menu)
 
 @Cmd()
 async def add_account(event):
