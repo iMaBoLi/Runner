@@ -24,17 +24,20 @@ async def yesedit(event):
     if DB.get_key("CHANGE_ACCS_FNAME")[event.sender_id] == "yes":
         try:
             await client(UpdateProfileRequest(first_name=fake.first_name()))
-        except:
+        except Exception as e:
+            print(e)
             pass
     if DB.get_key("CHANGE_ACCS_LNAME")[event.sender_id] == "yes":
         try:
             await client(UpdateProfileRequest(last_name=fake.last_name()))
-        except:
+        except Exception as e:
+            print(e)
             pass
     if DB.get_key("CHANGE_ACCS_BIO")[event.sender_id] == "yes":
         try:
             await client(UpdateProfileRequest(about=fake.text().split(".")[0]))
-        except:
+        except Exception as e:
+            print(e)
             pass
     if DB.get_key("CHANGE_ACCS_USERNAME")[event.sender_id] == "yes":
         try:
