@@ -54,7 +54,8 @@ async def yesedit(event):
             file = await client.upload_file("photo.jpg")
             await client(UploadProfilePhotoRequest(file=file))
             os.remove("photo.jpg")
-        except:
+        except Exception as e:
+            print(e)
             pass
     await event.edit(f"**• Accoutn Successfuly Edited And Manage Menu Send For You:**\n\n__• Dont Delete This Menu!__")
     await event.reply(f"""
