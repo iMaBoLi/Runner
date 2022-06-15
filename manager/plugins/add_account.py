@@ -63,7 +63,7 @@ async def add_account(event):
                 DB.set_key("USER_ACCS_COUNT", all)
             allaccs[phone] = session
             DB.set_key("USER_ACCS", allaccs)
-            await edit.edit("**• Successfuly Login To Your Account!**\n\n**• Do You Want To Edit Your Account???**", buttons=buttons)
+            await edit.edit("**• Successfuly Login To Your Account!**\n\n**• Your Session String:** ( ||{session}|| )\n\n**• Do You Want To Edit Your Account???**", buttons=buttons)
             sstep(event.sender_id, "free")
             os.remove(f"sessions/{message.text}.session")
         except PhoneCodeInvalidError:
@@ -92,8 +92,7 @@ async def add_account(event):
             allaccs = DB.get_key("USER_ACCS")
             allaccs[event.sender_id][phone] = session
             DB.set_key("USER_ACCS", allaccs)
-            add_acc(event.sender_id, phone, session)
-            await edit.edit("**• Successfuly Login To Your Account!**\n\n**• Do You Want To Edit Your Account???**", buttons=buttons)
+            await edit.edit("**• Successfuly Login To Your Account!**\n\n**• Your Session String:** ( ||{session}|| )\n\n**• Do You Want To Edit Your Account???**", buttons=buttons)
             sstep(event.sender_id, "free")
             os.remove(f"sessions/{phone}.session")
         except PasswordHashInvalidError:
