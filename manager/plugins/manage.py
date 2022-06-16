@@ -82,7 +82,7 @@ async def getauths(event):
 @bot.on(events.CallbackQuery(data=re.compile("terses\:(.*)\:(.*)")))
 async def getauths(event):
     phone = str(event.pattern_match.group(1).decode('utf-8'))
-    hash = str(event.pattern_match.group(2).decode('utf-8'))
+    hash = int(event.pattern_match.group(2).decode('utf-8'))
     session = DB.get_key("USER_ACCS")[event.sender_id][phone]
     client = TelegramClient(StringSession(session), 13367220, "52cdad8b941c04c0c85d28ed6b765825")
     await client.connect()
