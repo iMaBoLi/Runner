@@ -5,7 +5,7 @@ from manager.database import DB
 from telethon.tl.functions.account import UpdateProfileRequest, UpdateUsernameRequest
 from telethon.tl.functions.photos import UploadProfilePhotoRequest
 from faker import Faker
-from . import main_menu
+from . import main_menu, manage_menu
 from manager.functions import search_photo
 import re
 import requests
@@ -14,11 +14,6 @@ import random
 @bot.on(events.CallbackQuery(data=re.compile("yesedit\:(.*)")))
 async def yesedit(event):
     phone = str(event.pattern_match.group(1).decode('utf-8'))
-    manage_menu = [
-        [Button.inline("• LogOut •", data=f"logout:{phone}")],
-        [Button.inline("• Reset Authorization •", data=f"resetauthorization:{phone}")],
-        [Button.inline("• Receive Codes •", data=f"getcodes:{phone}")],
-    ]
     session = DB.get_key("USER_ACCS")[event.sender_id][phone]
     client = TelegramClient(StringSession(session), 13367220, "52cdad8b941c04c0c85d28ed6b765825")
     await client.connect()
@@ -59,6 +54,7 @@ async def yesedit(event):
             print(e)
             pass
     await event.edit(f"**• Account Successfuly Edited And Manage Menu Send For You:**\n\n__• Dont Delete This Menu!__", buttons=main_menu)
+    menu = manage_menu(phone)
     await event.reply(f"""
 **#Manage_Menu**
 
@@ -67,18 +63,14 @@ async def yesedit(event):
 __• Dont Delete This Menu!__
 
 **#Manage_Menu**
-""", buttons=manage_menu)
+""", buttons=menu)
     
 
 @bot.on(events.CallbackQuery(data=re.compile("noedit\:(.*)")))
 async def noedit(event):
     phone = str(event.pattern_match.group(1).decode('utf-8'))
-    manage_menu = [
-        [Button.inline("• LogOut •", data=f"logout:{phone}")],
-        [Button.inline("• Reset Authorization •", data=f"resetauthorization:{phone}")],
-        [Button.inline("• Receive Codes •", data=f"getcodes:{phone}")],
-    ]
     await event.edit(f"**• Account Not Edited And Manage Menu Send For You:**\n\n__• Dont Delete This Menu!__", buttons=main_menu)
+    menu = manage_menu(phone)
     await event.reply(f"""
 **#Manage_Menu**
 
@@ -87,4 +79,4 @@ async def noedit(event):
 __• Dont Delete This Menu!__
 
 **#Manage_Menu**
-""", buttons=manage_menu)
+""", buttons=menu)
