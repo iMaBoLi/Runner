@@ -2,7 +2,7 @@ from manager import bot
 from manager.events import Cmd
 from telethon import TelegramClient
 from telethon.sessions import StringSession
-from . import main_menu, back_menu
+from . import main_menu, back_menu, manage_menu
 from manager.database import DB
 
 @Cmd(pattern="Account Panel 🛠️")
