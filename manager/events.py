@@ -1,5 +1,5 @@
-from . import bot, LOG_GROUP
-from telethon import events
+from . import bot, LOG_GROUP, CHANNEL
+from telethon import events, functions, Button
 from manager.database import DB
 from traceback import format_exc
 import os
@@ -56,8 +56,20 @@ def Cmd(
 
             if not event.is_private or event.out:
                 return
+
             if admin_only and event.sender_id != bot.admin.id:
                 return
+            try:
+                await bot(functions.channels.GetParticipantRequest(
+                    channel=CHANNEL,
+                    participant=event.sender_id
+                ))
+            except:
+                info = await bot.get_entity(event.sender_id)
+                text = f"**👋 Hi {info.first_name}!**\n\n**🔶 For Use From Bot Pleae Join To My Channel To Receive Updates And More ...**\n\n __• Channel:__ **@{CHANNEL}**"
+                buttons = [[Button.url("• Join Channel •", f"https://t.me/{CHANNEL}")], [Button.inline("Check Join ✅", data=f"checkjoin:{event.sender_id}")]]
+                return await event.reply(text, buttons=buttons)
+
             try:
                 await func(event)
             except:
