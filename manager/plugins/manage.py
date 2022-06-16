@@ -91,6 +91,8 @@ async def getauths(event):
         if acc.hash == hash:
             await client(functions.account.ResetAuthorizationRequest(hash=acc.hash))
             await event.edit(f"**• Ok, This Session Has Been Terminated From Your Account!** ( `{phone}` )")
+        else:
+            await event.answer("• This Session Is Not Available In Your Account!", alert=True)
 
 @bot.on(events.CallbackQuery(data=re.compile("sesfile\:(.*)")))
 async def getauths(event):
