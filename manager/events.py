@@ -5,7 +5,8 @@ from traceback import format_exc
 import os
 import sys
 import re
-
+import asyncio
+        
 def Cmd(
     pattern=None,
     admin_only=False,
