@@ -5,6 +5,7 @@ from manager.database import DB
 from telethon.tl.functions.account import UpdateProfileRequest, UpdateUsernameRequest
 from telethon.tl.functions.photos import UploadProfilePhotoRequest
 from faker import Faker
+from . import main_menu
 from manager.functions import search_photo
 import re
 import requests
@@ -57,7 +58,7 @@ async def yesedit(event):
         except Exception as e:
             print(e)
             pass
-    await event.edit(f"**• Account Successfuly Edited And Manage Menu Send For You:**\n\n__• Dont Delete This Menu!__")
+    await event.edit(f"**• Account Successfuly Edited And Manage Menu Send For You:**\n\n__• Dont Delete This Menu!__", buttons=main_menu)
     await event.reply(f"""
 **#Manage_Menu**
 
@@ -70,14 +71,14 @@ __• Dont Delete This Menu!__
     
 
 @bot.on(events.CallbackQuery(data=re.compile("noedit\:(.*)")))
-async def yesedit(event):
+async def noedit(event):
     phone = str(event.pattern_match.group(1).decode('utf-8'))
     manage_menu = [
         [Button.inline("• LogOut •", data=f"logout:{phone}")],
         [Button.inline("• Reset Authorization •", data=f"resetauthorization:{phone}")],
         [Button.inline("• Receive Codes •", data=f"getcodes:{phone}")],
     ]
-    await event.edit(f"**• Account Not Edited And Manage Menu Send For You:**\n\n__• Dont Delete This Menu!__")
+    await event.edit(f"**• Account Not Edited And Manage Menu Send For You:**\n\n__• Dont Delete This Menu!__", buttons=main_menu)
     await event.reply(f"""
 **#Manage_Menu**
 
