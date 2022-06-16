@@ -3,6 +3,7 @@ from manager.events import Cmd
 from telethon import TelegramClient
 from telethon.sessions import StringSession
 from . import main_menu, back_menu
+from manager.database import DB
 
 @Cmd(pattern="Account Panel 🛠️")
 async def acc_panel(event):
@@ -12,6 +13,17 @@ async def acc_panel(event):
         phone = response.text 
     if phone == "🔙":
         return
+    accs = DB.get_key("USER_ACCS")[event.sender_id]
+    if phone not in accs:
+        return await event.reply(f"**• You Are Not Added This Phone Number:** ( `{phone}` ) **To Bot!**")
     edit = await event.reply("`• Please Wait . . .`")
-    client = TelegramClient(StringSession(), 13367220, "52cdad8b941c04c0c85d28ed6b765825")
-    await client.connect()
+    menu = manage_menu(phone)
+    await edit.edit(f"""
+**#Manage_Menu**
+
+**• Phone:** ( `{phone}` )
+
+__• Dont Delete This Menu!__
+
+**#Manage_Menu**
+""", buttons=menu)
