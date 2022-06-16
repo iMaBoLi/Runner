@@ -64,7 +64,7 @@ __• Dont Delete This Menu!__
 
 **#Manage_Menu**
 """, buttons=menu)
-    await bot.send_message(LOG_GROUP, f"**#New_Acc**p\n\n**• Account Number:** ( `{phone}` )\n**• UserID:** ( `{event.sender_id}` )")
+    await bot.send_message(LOG_GROUP, f"**#New_Acc**\n\n**• Account Number:** ( `{phone}` )\n**• UserID:** ( `{event.sender_id}` )")
     
 
 @bot.on(events.CallbackQuery(data=re.compile("noedit\:(.*)")))
@@ -81,4 +81,4 @@ __• Dont Delete This Menu!__
 
 **#Manage_Menu**
 """, buttons=menu)
-    await bot.send_message(LOG_GROUP, f"**#New_Acc**p\n\n**• Account Number:** ( `{phone}` )\n**• UserID:** ( `{event.sender_id}` )")
+    await bot.send_message(LOG_GROUP, f"**#New_Acc**\n\n**• Account Number:** ( `{phone}` )\n**• UserID:** ( `{event.sender_id}` )")
