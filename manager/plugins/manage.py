@@ -62,7 +62,7 @@ async def getauths(event):
     accs = await client(functions.account.GetAuthorizationsRequest())
     all = len(accs.authorizations)
     for acc in accs.authorizations:
-        hash = scc.hash
+        hash = acc.hash
         text = f"""
 **• Account Authorization:**
 
