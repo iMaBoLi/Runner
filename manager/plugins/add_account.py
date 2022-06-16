@@ -29,6 +29,8 @@ async def add_account(event):
         send = await event.reply("**•Ok, Send Your Phone Number:**\n\n__• Ex: +19307777777 __", buttons=back_menu)
         response = await conv.get_response(send.id)
         phone = response.text 
+    if phone.text == "🔙":
+        return
     edit = await event.reply("`• Please Wait . . .`")
     client = TelegramClient(StringSession(), 13367220, "52cdad8b941c04c0c85d28ed6b765825")
     await client.connect()
@@ -37,20 +39,21 @@ async def add_account(event):
         async with bot.conversation(event.chat_id) as conv:
             send = await edit.edit(f"**• Ok, Send Your Telegram Code For:** ( `{phone}` )")
             response = await conv.get_response(send.id)
-            phone_code = response.text 
+            phone_code = response.text
+            if phone_code.text == "🔙":
+                return
     except PhoneNumberInvalidError:
-        return await edit.edit("**• Your Phone Number Is Invalid!**")
+        return await edit.edit("**• Your Phone Number Is Invalid!**", buttons=main_menu)
     except PhoneNumberFloodError:
-        return await edit.edit("**• Your Phone Number Is Flooded!**")
+        return await edit.edit("**• Your Phone Number Is Flooded!**", buttons=main_menu)
     except PhoneNumberBannedError:
-        return await edit.edit("**• Your Phone Number Is Banned!**")
+        return await edit.edit("**• Your Phone Number Is Banned!**", buttons=main_menu)
     except TimeoutError:
         return await edit.edit("**• Your Conversation Has Been Canceled, Try Again!**", buttons=main_menu)
     edit = await event.reply("`• Please Wait . . .`")
     phone_code = phone_code.replace(" ", "")
     try:
         await client.sign_in(phone=phone, code=phone_code, password=None)
-        buttons = [[Button.inline("• Yes •", data=f"yesedit:{phone}"), Button.inline("• No •", data=f"noedit:{phone}")]]
         session = client.session.save()
         allaccs = DB.get_key("USER_ACCS")[event.sender_id]
         if phone not in allaccs:
@@ -60,20 +63,23 @@ async def add_account(event):
         allaccs = DB.get_key("USER_ACCS")
         allaccs[event.sender_id][phone] = session
         DB.set_key("USER_ACCS", allaccs)
+        buttons = [[Button.inline("• Yes •", data=f"yesedit:{phone}"), Button.inline("• No •", data=f"noedit:{phone}")]]
         await edit.edit(f"**• Successfuly Login To Your Account!**\n\n**• Your Session String:** ( `{session}` )\n\n**• Do You Want To Edit Your Account???**", buttons=buttons)
+        await edit.edit(buttons=main_menu)
     except PhoneCodeInvalidError:
-        return await edit.edit("**• Your Code Is Invalid!**\n\n__• Check Code Again!__")
+        return await edit.edit("**• Your Code Is Invalid, Try Again!**", buttons=main_menu)
     except PhoneCodeExpiredError:
         return await edit.edit("**• Your Code Is Expired, Try Again!**", buttons=main_menu)
     except SessionPasswordNeededError:
         async with bot.conversation(event.chat_id) as conv:
             send = await edit.edit(f"**• Ok, Send Your Account Password For:** ( `{phone}` )")
             response = await conv.get_response(send.id)
-            password = response.text  
+            password = response.text
+            if password.text == "🔙":
+                return 
         edit = await event.reply("`• Please Wait . . .`")
         try:
             await client.sign_in(password=password)
-            buttons = [[Button.inline("• Yes •", data=f"yesedit:{phone}"), Button.inline("• No •", data=f"noedit:{phone}")]]
             session = client.session.save()
             allaccs = DB.get_key("USER_ACCS")[event.sender_id]
             if phone not in allaccs:
@@ -83,6 +89,8 @@ async def add_account(event):
             allaccs = DB.get_key("USER_ACCS")
             allaccs[event.sender_id][phone] = session
             DB.set_key("USER_ACCS", allaccs)
+            buttons = [[Button.inline("• Yes •", data=f"yesedit:{phone}"), Button.inline("• No •", data=f"noedit:{phone}")]]
             await edit.edit(f"**• Successfuly Login To Your Account!**\n\n**• Your Session String:** ( `{session}` )\n\n**• Do You Want To Edit Your Account???**", buttons=buttons)
+            await edit.edit(buttons=main_menu)
         except PasswordHashInvalidError:
-            return await edit.edit("**• Your Account Password Is Invalid, Try Again!**")
+            return await edit.edit("**• Your Account Password Is Invalid, Try Again!**", buttons=main_menu)
