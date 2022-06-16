@@ -37,6 +37,6 @@ async def session_list(event):
         return await event.answer("• Not Account Added To Bot!", alert=True)
     text = "• Your Telethon Sessions List:\n\n"
     for acc in accs:
-        text += f"{{acc} - ( {accs[acc]} )\n"
+        text += f"{acc} - ( {accs[acc]} )\n"
     open(f"{event.sender_id}.txt", "w").write(str(text))
     await event.reply("**• Your Telethon Sessions List!**", file=f"{event.sender_id}.txt")
