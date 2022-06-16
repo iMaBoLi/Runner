@@ -1,11 +1,9 @@
 from manager import bot
 from manager.events import Cmd
 from telethon import TelegramClient, Button
-import telethon
 from telethon.sessions import StringSession
 from manager.database import DB
 from . import main_menu, back_menu
-from manager.database.steps import steps, sstep, gstep
 from telethon.errors import (
     PhoneNumberInvalidError,
     PhoneNumberFloodError,
@@ -21,7 +19,6 @@ import os
 import time
 import requests
 import glob
-from pyrogram import Client
 
 @Cmd(pattern="Add Account 📥")
 async def add_account(event):
