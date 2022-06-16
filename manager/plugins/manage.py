@@ -1,9 +1,10 @@
 from manager import bot, LOG_GROUP
-from telethon import TelegramClient, events, functions
+from telethon import TelegramClient, events, functions, Button
 from telethon.sessions import StringSession
 from manager.database import DB
 from manager.functions import sql_session
 import re
+import os
 
 @bot.on(events.CallbackQuery(data=re.compile("logout\:(.*)")))
 async def logout(event):
@@ -50,7 +51,7 @@ async def getauths(event):
         if not acc.current:
             await client(functions.account.ResetAuthorizationRequest(hash=acc.hash))
             cur += 1
-    await event.answer(f"• Ok, {cur} Session From {all} Sessions Has Been Removed!", alert=True)
+    await event.answer(f"• Ok, {cur} Session From {all} Sessions Has Been Terminated!", alert=True)
 
 @bot.on(events.CallbackQuery(data=re.compile("getauths\:(.*)")))
 async def getauths(event):
@@ -60,12 +61,36 @@ async def getauths(event):
     await client.connect()
     accs = await client(functions.account.GetAuthorizationsRequest())
     all = len(accs.authorizations)
-    cur = 0
     for acc in accs.authorizations:
-        if not acc.current:
+        hash = scc.hash
+        text = f"""
+**• Account Authorization:**
+
+**• Your Number:** ( `{phone}` )
+
+**• Hash:** ( `{hash}` )
+**• Device:** ( `{acc.device_model}` )
+**• Platform:** ( `{acc.platform}` )
+**• App Name:** ( `{acc.app_name}` )
+**• App Version:** ( `{acc.app_version}` )
+**• Country:** ( `{acc.country}` - `{acc.ip}` )
+**• Official App:** ( `{"✅" if acc.official_app else "❌"}` )
+**• This Bot App:** ( `{"✅" if acc.current else "❌"}` )
+"""
+        await event.reply(text, buttons=[[Button.inline("• Terminate •", data=f"terses:{phone}:{hash}")]])
+
+@bot.on(events.CallbackQuery(data=re.compile("terses\:(.*)\:(.*)")))
+async def getauths(event):
+    phone = str(event.pattern_match.group(1).decode('utf-8'))
+    hash = str(event.pattern_match.group(1).decode('utf-8'))
+    session = DB.get_key("USER_ACCS")[event.sender_id][phone]
+    client = TelegramClient(StringSession(session), 13367220, "52cdad8b941c04c0c85d28ed6b765825")
+    await client.connect()
+    accs = await client(functions.account.GetAuthorizationsRequest())
+    for acc in accs.authorizations:
+        if acc.hash == hash:
             await client(functions.account.ResetAuthorizationRequest(hash=acc.hash))
-            cur += 1
-    await event.answer(f"• Ok, {cur} Session From {all} Sessions Has Been Removed!", alert=True)
+            await event.edit(f"**• Ok, This Session Has Been Terminated From Your Account!** ( `{phone}` )")
 
 @bot.on(events.CallbackQuery(data=re.compile("sesfile\:(.*)")))
 async def getauths(event):
