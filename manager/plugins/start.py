@@ -10,3 +10,10 @@ async def start(event):
 @Cmd(pattern="🔙")
 async def back(event):
     await event.reply("**• Ok, Backed To Home Page!**", buttons=main_menu)
+
+            try:
+                await bot(functions.channels.GetParticipantRequest(
+                    channel=CHANNEL,
+                    participant=event.sender_id
+                ))
+            except:
