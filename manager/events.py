@@ -61,6 +61,7 @@ def Cmd(
 
             if admin_only and event.sender_id != bot.admin.id:
                 return
+
             try:
                 await bot(functions.channels.GetParticipantRequest(
                     channel=CHANNEL,
