@@ -11,7 +11,7 @@ import time
 
 async def is_spam(event):
     spams = DB.get_key("USER_SPAMS") or {}
-    max, msgs = 5,10
+    max, msgs = 2,3
     ban = DB.get_key("SPAM_BAN_TIME")
     user_id = event.sender_id
     try:
