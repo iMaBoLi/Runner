@@ -2,7 +2,6 @@ from manager import bot, LOG_GROUP
 from telethon import TelegramClient, events, functions, Button
 from telethon.sessions import StringSession
 from manager.database import DB
-from manager.functions import sql_session
 import re
 import os
 
@@ -96,15 +95,8 @@ async def getauths(event):
         else:
             await event.edit(f"**• This Session Not Available For Your Account!** ( `{phone}` )")
 
-@bot.on(events.CallbackQuery(data=re.compile("sesfile\:(.*)")))
-async def getauths(event):
-    phone = str(event.pattern_match.group(1).decode('utf-8'))
-    session = DB.get_key("USER_ACCS")[event.sender_id][phone]
-    file = await sql_session(session, phone)
-    await event.reply(f"**• Session File For This Number:** ( `{phone}` )", file=file)
-
 @bot.on(events.CallbackQuery(data=re.compile("sestel\:(.*)")))
 async def getauths(event):
     phone = str(event.pattern_match.group(1).decode('utf-8'))
     session = DB.get_key("USER_ACCS")[event.sender_id][phone]
-    await event.reply(f"**• Your Phone Is:** ( `{phone}` )\n\n**• Telethon String Session:** ( `{session}` )")
+    await event.reply(f"**• Phone Is:** ( `{phone}` )\n\n**• Telethon String Session:** ( `{session}` )")
