@@ -16,7 +16,7 @@ async def support(event):
             send = await bot.send_message(LOG_GROUP, f"**#New_Message**\n\n**• UserID:** ( `{event.sender_id}` )\n**• Message:**\n\n`{response.text}`")
         else:
             await bot.send_message(LOG_GROUP, f"**#New_Message**\n\n**• UserID:** ( `{event.sender_id}` )\n**• Message:**")
-            send = await response.forward_to(LOG_GROUP)
+            send = await bot.send_message(LOG_GROUP, response)
         response = await conv.get_response(send.id, timeout=1000)
     if response.text == "/cancel":
         return await response.reply("**• Ok, Response To This Message Has Been Canceled!**")
@@ -24,5 +24,5 @@ async def support(event):
         await bot.send_message(event.sender_id, f"**• Your Response From Support:**\n\n`{response.text}`")
     else:
         await bot.send_message(event.sender_id, f"**• Your Response From Support:**")
-        await bot.send_message(event.sender_id, response.text, file=response.media)
+        await bot.send_message(event.sender_id, response)
     await response.reply(f"**• Response Message Successfuly Sended To:** ( `{event.sender_id}` )")
