@@ -2,9 +2,9 @@ from telethon import Button
 
 main_menu = [
     [Button.text("Add Account 📥", resize=True)],
-    [Button.text("Account Settings ⚙️", resize=True), Button.text("Accounts List 💡", resize=True)],
+    [Button.text("Account Settings ⚙️", resize=True), Button.text("Accounts List 📋", resize=True)],
     [Button.text("Account Panel 🛠️", resize=True), Button.text("My Info 📝", resize=True)],
-    [Button.text("Support 🧒", resize=True)],
+    [Button.text("Guide 💡", resize=True), Button.text("Support 🧒", resize=True)],
 ]
 
 back_menu = [
