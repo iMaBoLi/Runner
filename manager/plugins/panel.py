@@ -7,7 +7,7 @@ import re
 
 @Cmd(pattern="/panel", admin_only=True)
 async def panel(event):
-    await event.reply(f"**• Hi {bot.admin.first_name}!\n\n**• Welcome To Admin Panel!**\n\n__• Use This Buttons!__", buttons=panel_menu)
+    await event.reply(f"**• Hi {bot.admin.first_name}!**\n\n**• Welcome To Admin Panel!**\n\n__• Use This Buttons!__", buttons=panel_menu())
 
 @bot.on(events.CallbackQuery(data="onoff"))
 async def change_status(event):
