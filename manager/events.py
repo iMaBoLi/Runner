@@ -11,15 +11,16 @@ import time
 
 async def is_spam(event):
     spams = DB.get_key("USER_SPAMS") or {}
-    max, msgs = 5,4
     ban = DB.get_key("SPAM_BAN_TIME")
+    max = 5
+    msgs = 4
     user_id = event.sender_id
-    try:
-        usr = spams[user_id]
-        usr["messages"] += 1
-    except:
+    if user_id not in spams:
         spams[user_id] = {"next_time": int(time.time()) + max, "messages": 1, "banned": 0}
         usr = spams[user_id]
+    else:
+        usr = spams[user_id]
+        usr["messages"] += 1
     if usr["banned"] >= int(time.time()):
         return True
     else:
@@ -32,7 +33,7 @@ async def is_spam(event):
         else:
             spams[user_id]["messages"] = 1
             spams[user_id]["next_time"] = int(time.time()) + max
-    return False
+            return False
 
 def Cmd(
     pattern=None,
