@@ -13,7 +13,7 @@ async def is_spam(event):
     spams = DB.get_key("USER_SPAMS")
     ban = DB.get_key("SPAM_BAN_TIME")
     max = 5
-    msgs = 4
+    msgs = 8
     user_id = event.sender_id
     if user_id not in spams:
         spams[user_id] = {"next_time": int(time.time()) + max, "messages": 1, "banned": 0}
@@ -27,7 +27,7 @@ async def is_spam(event):
         if usr["next_time"] >= int(time.time()):
             if usr["messages"] >= msgs:
                 spams[user_id]["banned"] = time.time() + ban
-                await event.reply(f"**🚫 You Are Spamed In Bot And Blocked For:** ( `{ban}s` ) 🚫")
+                await event.reply(f"**🚫 You Are Spamed In Bot And Blocked For:** ( `{ban} seconds` )")
                 await bot.send_message(LOG_GROUP, f"**#New_Spam**\n\n**• UserID:** ( `{user_id}` )\n\n**• Ban Time:** ( `{ban}s` )")
                 return True
         else:
