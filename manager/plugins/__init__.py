@@ -1,12 +1,17 @@
+from manager import bot
 from telethon import Button
 from manager.database import DB
 
-main_menu = [
-    [Button.text("Add Account 📥", resize=True)],
-    [Button.text("Account Settings ⚙️", resize=True), Button.text("Accounts List 📋", resize=True)],
-    [Button.text("Account Panel 🛠️", resize=True), Button.text("My Info 📝", resize=True)],
-    [Button.text("Guide 💡", resize=True), Button.text("Support 🧒", resize=True)],
-]
+def main_menu(event):
+    menu = [
+        [Button.text("Add Account 📥", resize=True)],
+        [Button.text("Account Settings ⚙️", resize=True), Button.text("Accounts List 📋", resize=True)],
+        [Button.text("Account Panel 🛠️", resize=True), Button.text("My Info 📝", resize=True)],
+        [Button.text("Guide 💡", resize=True), Button.text("Support 🧒", resize=True)],
+    ]
+    if event.sender_id == bot.admin.id:
+        menu.append([Button.text("Admin Panel 🔐", resize=True)])
+    return menu
 
 back_menu = [
     [Button.text("🔙", resize=True)],
