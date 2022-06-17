@@ -9,7 +9,7 @@ async def myaccs(event):
     accs = DB.get_key("USER_ACCS")[event.sender_id]
     if len(accs) == 0:
         return await event.reply("**• You Are Not Account Added To Bot!**")
-    elif len(accs) > 100:
+    elif len(accs) < 100:
         text = f"**• Your Accounts List:**\n**• Count:** ( `{len(accs)}` )\n\n"
         count = 1
         for acc in accs:
