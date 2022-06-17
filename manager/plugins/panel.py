@@ -13,6 +13,6 @@ async def panel(event):
 async def change_status(event):
     status = "off" if DB.get_key("BOT_STATUS") == "on" else "on"
     DB.set_key("BOT_STATUS", status)
-    await event.edit(buttons=panel_menu)
+    await event.edit(buttons=panel_menu())
     status = "Actived ✅" if DB.get_key("BOT_STATUS") == "on" else "DeActived ❌"    
     await event.reply(f"**• Ok, The Bot Has Been Successfully {status}!**")
