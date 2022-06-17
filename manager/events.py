@@ -77,7 +77,7 @@ def Cmd(
                 buttons = [[Button.url("• Join Channel •", f"https://t.me/{CHANNEL}")], [Button.inline("Check Join ✅", data=f"checkjoin:{event.sender_id}")]]
                 return await event.reply(text, buttons=buttons)
 
-            if DB.get_key("BOT_STATUS") == "off":
+            if DB.get_key("BOT_STATUS") == "off" and not event.sender_id == bot.admin.id:
                 return await event.reply("**• Sorry, The Bot Has Been DeActived ❌!**\n\n__• Please Try Again Later!__")
 
             try:
