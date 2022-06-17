@@ -11,8 +11,6 @@ async def acc_panel(event):
         send = await event.reply("**•Ok, Send Your Phone Number To Get Panel For This:**\n\n__• Ex: +19307777777 __", buttons=back_menu)
         response = await conv.get_response(send.id)
         phone = response.text 
-    if phone == "🔙":
-        return
     accs = DB.get_key("USER_ACCS")[event.sender_id]
     if phone not in accs:
         return await event.reply(f"**• You Are Not Added This Phone Number:** ( `{phone}` ) **To Bot!**")
