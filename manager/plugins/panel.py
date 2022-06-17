@@ -28,7 +28,7 @@ async def sendtoall(event):
     if response.text == "🔙":
         return
     users = DB.get_key("BOT_USERS")
-    count = 1
+    count = 0
     for user in users:
         await bot.send_message(int(user), response)
         count += 1
