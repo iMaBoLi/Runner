@@ -79,9 +79,8 @@ def Cmd(
 
             USER_OFF_STATUS = DB.get_key("USER_OFF_STATUS") or []
             if DB.get_key("BOT_STATUS") == "off" and not event.sender_id == bot.admin.id and event.sender_id not in USER_OFF_STATUS:
-                if event.sender_id not in USER_OFF_STATUS:
-                    USER_OFF_STATUS.append(event.sender_id)
-                    DB.set_key("USER_OFF_STATUS", USER_OFF_STATUS)
+                USER_OFF_STATUS.append(event.sender_id)
+                DB.set_key("USER_OFF_STATUS", USER_OFF_STATUS)
                 return await event.reply("**• Sorry, The Bot Has Been DeActived ❌!**\n\n__• Please Try Again Later!__")
 
             try:
