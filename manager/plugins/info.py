@@ -12,9 +12,7 @@ async def info(event):
 **• Your Information:**
 
 **• Name:** ( `{info.first_name}` )
-
 **• UserID:** ( `{info.id}` )
-
 
 **• Accounts Count:** ( `{acc_count}` )
 
