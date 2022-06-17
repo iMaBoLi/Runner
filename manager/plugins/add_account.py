@@ -25,7 +25,9 @@ async def add_account(event):
     async with bot.conversation(event.chat_id) as conv:
         send = await event.reply("**•Ok, Send Your Phone Number:**\n\n__• Ex: +19307777777 __", buttons=back_menu)
         response = await conv.get_response(send.id)
-        phone = response.text 
+        phone = response.text
+    if phone == "🔙":
+        return
     edit = await event.reply("`• Please Wait . . .`")
     client = TelegramClient(StringSession(), 13367220, "52cdad8b941c04c0c85d28ed6b765825")
     await client.connect()
@@ -35,6 +37,8 @@ async def add_account(event):
             send = await edit.edit(f"**• Ok, Send Your Telegram Code For:** ( `{phone}` )")
             response = await conv.get_response(send.id)
             phone_code = response.text
+        if phone_code == "🔙":
+            return
     except PhoneNumberInvalidError:
         return await edit.edit("**• Your Phone Number Is Invalid!**", buttons=main_menu)
     except PhoneNumberFloodError:
@@ -66,7 +70,9 @@ async def add_account(event):
         async with bot.conversation(event.chat_id) as conv:
             send = await edit.edit(f"**• Ok, Send Your Account Password For:** ( `{phone}` )")
             response = await conv.get_response(send.id)
-            password = response.text 
+            password = response.text
+        if password == "🔙":
+            return
         edit = await event.reply("`• Please Wait . . .`")
         try:
             await client.sign_in(password=password)
