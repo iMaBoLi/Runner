@@ -4,7 +4,7 @@ from manager.events import Cmd
 from manager.database import DB
 import re
 
-@Cmd(pattern="Accounts List 💡")
+@Cmd(pattern="Accounts List 📋")
 async def myaccs(event):
     accs = DB.get_key("USER_ACCS")[event.sender_id]
     if len(accs) == 0:
