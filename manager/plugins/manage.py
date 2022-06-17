@@ -91,6 +91,8 @@ async def getauths(event):
         if acc.hash == hash:
             await client(functions.account.ResetAuthorizationRequest(hash=acc.hash))
             await event.edit(f"**• Ok, This Session Has Been Terminated From Your Account!** ( `{phone}` )")
+        elif acc.hash == 0:
+            await event.answer("• Im Connot Terminated My Self From Your Account!", alert=True)
         else:
             await event.edit(f"**• This Session Not Available For Your Account!** ( `{phone}` )")
 
