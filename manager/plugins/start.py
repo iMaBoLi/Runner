@@ -8,7 +8,7 @@ import re
 @Cmd(pattern="(?i)^\/start$")
 async def start(event):
     info = await bot.get_entity(event.sender_id)
-    await event.reply(f"**👋 Hi {info.first_name}!**\n**😘 Welcome To Acc Manager Robot!**\n\n**💡 Maker: @{bot.admin.username}**", buttons=main_menu)
+    await event.reply(f"**👋 Hi {info.first_name}!**\n**😘 Welcome To Acc Manager Robot!**\n\n**💡 Maker: @{bot.admin.username}**", buttons=main_menu(event))
 
 @Cmd(pattern="🔙")
 async def back(event):
@@ -23,7 +23,7 @@ async def checkjoin(event):
             participant=id
         ))
         info = await bot.get_entity(event.sender_id)
-        await event.reply(f"**👋 Hi {info.first_name}!**\n**😘 Welcome To Acc Manager Robot!**\n\n**💡 Maker: @{bot.admin.username}**", buttons=main_menu)
+        await event.reply(f"**👋 Hi {info.first_name}!**\n**😘 Welcome To Acc Manager Robot!**\n\n**💡 Maker: @{bot.admin.username}**", buttons=main_menu(event))
         await event.delete()
     except:
         await event.answer("• You Are Not Joined To Channel!", alert=True)
