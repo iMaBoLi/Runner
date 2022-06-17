@@ -1,4 +1,5 @@
 from telethon import Button
+from manager.database import DB
 
 main_menu = [
     [Button.text("Add Account 📥", resize=True)],
@@ -19,3 +20,9 @@ def manage_menu(phone):
         [Button.inline("• Get Session File •", data=f"sesfile:{phone}"), Button.inline("• Get Telethon Session •", data=f"sestel:{phone}")],
     ]
     return menu
+
+status = "✅" if DB.get_key("BOT_STATUS") == "on" else "❌"
+panel_buttons = [
+    [Button.inline(f"{status} Change Bot Status {status}", data="onoff")],
+    [Button.inline("• Send To All •", data="sendall")],
+]
