@@ -6,7 +6,7 @@ from manager.database import DB
 import re
 import asyncio
 
-@Cmd(pattern="/panel", admin_only=True)
+@Cmd(pattern="Admin Panel 🔐", admin_only=True)
 async def panel(event):
     await event.reply(f"**• Hi {bot.admin.first_name}!**\n\n**• Welcome To Admin Panel!**\n\n__• Use This Buttons!__", buttons=panel_menu())
 
@@ -33,4 +33,4 @@ async def sendtoall(event):
         await bot.send_message(int(user), response)
         count += 1
         await asyncio.sleep(0.2)
-    await response.reply(f"**• Ok, Your Message Successfuly Sended To** `{count}` **User From** `{len(users)}` **Users!**", buttons=main_menu)
+    await response.reply(f"**• Ok, Your Message Successfuly Sended To** `{count}` **User From** `{len(users)}` **Users!**", buttons=main_menu(event))
