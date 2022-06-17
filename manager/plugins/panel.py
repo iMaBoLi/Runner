@@ -34,3 +34,17 @@ async def sendtoall(event):
         count += 1
         await asyncio.sleep(0.2)
     await response.reply(f"**• Ok, Your Message Successfuly Sended To** `{count}` **User From** `{len(users)}` **Users!**", buttons=main_menu(event))
+
+@bot.on(events.CallbackQuery(data="sbtime"))
+async def sendtoall(event):
+    async with bot.conversation(event.chat_id) as conv:
+        send = await event.reply("**•Ok, Please Send A Number To Set For Spam Ban Time:**", buttons=back_menu)
+        response = await conv.get_response(send.id)
+    if response.text == "🔙":
+        return
+    try:
+        sb = int(response.text)
+    except:
+        return await event.reply("**• Please Send A Number, Try Again!**", buttons=main_menu(event))
+    DB.set_key("SPAM_BAN_TIME", sb)
+    await response.reply(f"**• Ok, Spam Ban Time For Users Was Set To** `{sb}` **Seconds!**", buttons=main_menu(event))
