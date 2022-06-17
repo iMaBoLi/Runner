@@ -74,9 +74,6 @@ def Cmd(
                 buttons = [[Button.url("• Join Channel •", f"https://t.me/{CHANNEL}")], [Button.inline("Check Join ✅", data=f"checkjoin:{event.sender_id}")]]
                 return await event.reply(text, buttons=buttons)
 
-            if event.text == "🔙":
-                return await event.reply("**• Ok, Backed To Home Page!**", buttons=main_menu)
-
             try:
                 await func(event)
             except:
