@@ -12,7 +12,7 @@ async def start(event):
 
 @Cmd(pattern="🔙")
 async def back(event):
-    await event.reply("**• Ok, Backed To Home Page!**", buttons=main_menu)
+    await event.reply("**• Ok, Backed To Home Page!**", buttons=main_menu(event))
 
 @bot.on(events.CallbackQuery(data=re.compile("checkjoin\:(.*)")))
 async def checkjoin(event):
