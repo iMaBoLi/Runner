@@ -21,7 +21,7 @@ async def support(event):
     if response.text == "/cancel":
         return await response.reply("**• Ok, Response To This Message Has Been Canceled!**")
     if not response.media:
-        await bot.send_message(event.sender_id, f"**• Your Response From Support:**\n\n`{pas}`")
+        await bot.send_message(event.sender_id, f"**• Your Response From Support:**\n\n`{response.text}`)
     else:
         await bot.send_message(event.sender_id, f"**• Your Response From Support:**")
         await bot.send_message(event.sender_id, response.text, file=response.media)
