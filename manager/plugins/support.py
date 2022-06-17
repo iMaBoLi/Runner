@@ -13,7 +13,7 @@ async def support(event):
     await response.reply(f"**• Ok, Your Message Successfuly Sended To Support!**\n\n__• Please Wait For Reponse!__", buttons=main_menu)
     async with bot.conversation(LOG_GROUP) as conv:
         if not response.media:
-            send = await bot.send_message(LOG_GROUP, f"**#New_Message**\n\n**• UserID:** ( `{event.sender_id}` )\n**• Message:**`{response.text}`")
+            send = await bot.send_message(LOG_GROUP, f"**#New_Message**\n\n**• UserID:** ( `{event.sender_id}` )\n**• Message:**\n\n`{response.text}`")
         else:
             await bot.send_message(LOG_GROUP, f"**#New_Message**\n\n**• UserID:** ( `{event.sender_id}` )\n**• Message:**")
             send = await response.forward_to(LOG_GROUP)
