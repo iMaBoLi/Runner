@@ -7,6 +7,32 @@ import os
 import sys
 import re
 import asyncio
+
+import time as tm
+spams = {}
+msgs = 4
+max = 5
+ban = 300
+
+async def is_spam(user_id, event):
+    try:
+        usr = spams[user_id]
+        usr["messages"] += 1
+    except:
+        spams[user_id] = {"next_time": int(tm.time()) + max, "messages": 1, "banned": 0}
+        usr = spams[user_id]
+    if usr["banned"] >= int(tm.time()):
+        return True
+    else:
+        if usr["next_time"] >= int(tm.time()):
+            if usr["messages"] >= msgs:
+                spams[user_id]["banned"] = tm.time() + ban
+                await event.reply("Spamed And Blocked!")
+                return True
+        else:
+            spams[user_id]["messages"] = 1
+            spams[user_id]["next_time"] = int(tm.time()) + max
+    return False
         
 def Cmd(
     pattern=None,
@@ -15,6 +41,9 @@ def Cmd(
 ):
     def decorator(func):
         async def wrapper(event):
+
+        if await is_spam(user_id, event):
+            return
 
             if not DB.get_key("BOT_STATUS"):
                 DB.set_key("BOT_STATUS", "on")
