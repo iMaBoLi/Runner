@@ -7,31 +7,31 @@ import os
 import sys
 import re
 import asyncio
+import time
 
-import time as tm
-spams = {}
-msgs = 4
-max = 5
-ban = 300
-
-async def is_spam(user_id, event):
+async def is_spam(event):
+    spams = DB.get_key("USER_SPAMS") or {}
+    max, msgs = 4,10
+    ban = DB.get_key("SPAM_BAN_TIME")
+    user_id = event.sender_id
     try:
         usr = spams[user_id]
         usr["messages"] += 1
     except:
-        spams[user_id] = {"next_time": int(tm.time()) + max, "messages": 1, "banned": 0}
+        spams[user_id] = {"next_time": int(time.time()) + max, "messages": 1, "banned": 0}
         usr = spams[user_id]
-    if usr["banned"] >= int(tm.time()):
+    if usr["banned"] >= int(time.time()):
         return True
     else:
-        if usr["next_time"] >= int(tm.time()):
+        if usr["next_time"] >= int(time.time()):
             if usr["messages"] >= msgs:
-                spams[user_id]["banned"] = tm.time() + ban
+                spams[user_id]["banned"] = time.time() + ban
                 await event.reply("Spamed And Blocked!")
+                await 
                 return True
         else:
             spams[user_id]["messages"] = 1
-            spams[user_id]["next_time"] = int(tm.time()) + max
+            spams[user_id]["next_time"] = int(time.time()) + max
     return False
         
 def Cmd(
@@ -42,7 +42,27 @@ def Cmd(
     def decorator(func):
         async def wrapper(event):
 
-            if (await is_spam(event.sender_id, event)):
+            if not event.is_private or event.out:
+                return
+
+            if admin_only and event.sender_id != bot.admin.id:
+                return
+
+            try:
+                await bot(functions.channels.GetParticipantRequest(
+                    channel=CHANNEL,
+                    participant=event.sender_id
+                ))
+            except:
+                info = await bot.get_entity(event.sender_id)
+                text = f"**👋 Hi {info.first_name}!**\n\n**🔶 For Use From Bot Pleae Join To My Channel To Receive Updates And More ...**\n\n __• Channel:__ **@{CHANNEL}**"
+                buttons = [[Button.url("• Join Channel •", f"https://t.me/{CHANNEL}")], [Button.inline("Check Join ✅", data=f"checkjoin:{event.sender_id}")]]
+                return await event.reply(text, buttons=buttons)
+
+            if DB.get_key("BOT_STATUS") == "off" and not event.sender_id == bot.admin.id:
+                return await event.reply("**• Sorry, The Bot Has Been DeActived ❌!**\n\n__• Please Try Again Later!__")
+
+            if not event.sender_id == bot.admin.id and (await is_spam(event)):
                 return
 
             if not DB.get_key("BOT_STATUS"):
@@ -88,26 +108,6 @@ def Cmd(
             if event.sender_id not in CHANGE_ACCS_PHOTO:                 
                 CHANGE_ACCS_PHOTO.update({event.sender_id: "yes"})
                 DB.set_key("CHANGE_ACCS_PHOTO", CHANGE_ACCS_PHOTO)
-
-            if not event.is_private or event.out:
-                return
-
-            if admin_only and event.sender_id != bot.admin.id:
-                return
-
-            try:
-                await bot(functions.channels.GetParticipantRequest(
-                    channel=CHANNEL,
-                    participant=event.sender_id
-                ))
-            except:
-                info = await bot.get_entity(event.sender_id)
-                text = f"**👋 Hi {info.first_name}!**\n\n**🔶 For Use From Bot Pleae Join To My Channel To Receive Updates And More ...**\n\n __• Channel:__ **@{CHANNEL}**"
-                buttons = [[Button.url("• Join Channel •", f"https://t.me/{CHANNEL}")], [Button.inline("Check Join ✅", data=f"checkjoin:{event.sender_id}")]]
-                return await event.reply(text, buttons=buttons)
-
-            if DB.get_key("BOT_STATUS") == "off" and not event.sender_id == bot.admin.id:
-                return await event.reply("**• Sorry, The Bot Has Been DeActived ❌!**\n\n__• Please Try Again Later!__")
 
             try:
                 await func(event)
