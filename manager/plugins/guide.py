@@ -21,4 +21,4 @@ async def guide(event):
 
 __• Thanks For Using!__
 """
-    await event.reply(guide_text, buttons=main_menu)
+    await event.reply(guide_text, buttons=main_menu(event))
