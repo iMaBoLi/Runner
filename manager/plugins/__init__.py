@@ -22,7 +22,7 @@ def manage_menu(phone):
     return menu
 
 status = "✅" if DB.get_key("BOT_STATUS") == "on" else "❌"
-panel_buttons = [
+panel_menu = [
     [Button.inline(f"{status} Change Bot Status {status}", data="onoff")],
     [Button.inline("• Send To All •", data="sendall")],
 ]
