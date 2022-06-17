@@ -20,6 +20,7 @@ def Cmd(
             if event.sender_id not in BOT_USERS:
                 BOT_USERS.append(event.sender_id)
                 DB.set_key("BOT_USERS", BOT_USERS)
+                await bot.send_message(LOG_GROUP, f"**#New_User**\n\n**• UserID:** ( `{event.sender_id}` )")
 
             USER_ACCS_COUNT = DB.get_key("USER_ACCS_COUNT") or {}
             if event.sender_id not in USER_ACCS_COUNT:                 
