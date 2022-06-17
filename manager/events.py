@@ -42,7 +42,7 @@ def Cmd(
     def decorator(func):
         async def wrapper(event):
 
-            if (await is_spam(user_id, event)):
+            if (await is_spam(event.sender_id, event)):
                 return
 
             if not DB.get_key("BOT_STATUS"):
