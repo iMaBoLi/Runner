@@ -24,7 +24,7 @@ def manage_menu(phone):
 def panel_menu():
     status = "✅" if DB.get_key("BOT_STATUS") == "on" else "❌"
     menu = [
-        [Button.inline(f"{status} Change Bot Status {status}", data="onoff")],
-        [Button.inline("• Send To All •", data="sendall")],
+        [Button.inline(f"{status} Bot Status {status}", data="onoff")],
+        [Button.inline("• Send To All •", data="sendtoall")],
     ]
     return menu
