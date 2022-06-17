@@ -75,7 +75,7 @@ def Cmd(
                 return await event.reply(text, buttons=buttons)
 
             if event.text == "🔙":
-                return await event.reply("**• Ok, Backed To Home Page!**", buttons=main_menu)
+                await event.reply("**• Ok, Backed To Home Page!**")
 
             print(event.text)
 
