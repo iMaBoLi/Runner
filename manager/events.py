@@ -16,6 +16,9 @@ def Cmd(
     def decorator(func):
         async def wrapper(event):
 
+            if not DB.get_key("BOT_STATUS"):
+                DB.set_key("BOT_STATUS", "on")
+
             BOT_USERS = DB.get_key("BOT_USERS") or []
             if event.sender_id not in BOT_USERS:
                 BOT_USERS.append(event.sender_id)
