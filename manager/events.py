@@ -10,7 +10,7 @@ import asyncio
 import time
 
 async def is_spam(event):
-    spams = DB.get_key("USER_SPAMS") or {}
+    spams = DB.get_key("USER_SPAMS")
     ban = DB.get_key("SPAM_BAN_TIME")
     max = 5
     msgs = 4
@@ -51,6 +51,9 @@ def Cmd(
 
             if not DB.get_key("SPAM_BAN_TIME"):
                 DB.set_key("SPAM_BAN_TIME", 300)
+
+            if not DB.get_key("USER_SPAMS"):
+                DB.set_key("USER_SPAMS", {})
 
             if not event.sender_id == bot.admin.id and (await is_spam(event)):
                 return
