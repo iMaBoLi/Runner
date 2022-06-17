@@ -77,8 +77,8 @@ def Cmd(
                 buttons = [[Button.url("• Join Channel •", f"https://t.me/{CHANNEL}")], [Button.inline("Check Join ✅", data=f"checkjoin:{event.sender_id}")]]
                 return await event.reply(text, buttons=buttons)
 
-            if DB.get_key("BOT_STATUS") == "off" and not event.sender_id == bot.admin.id:
-                USER_OFF_STATUS = DB.get_key("USER_OFF_STATUS") or []
+            USER_OFF_STATUS = DB.get_key("USER_OFF_STATUS") or []
+            if DB.get_key("BOT_STATUS") == "off" and not event.sender_id == bot.admin.id and event.sender_id not in USER_OFF_STATUS:
                 if event.sender_id not in USER_OFF_STATUS:
                     USER_OFF_STATUS.append(event.sender_id)
                     DB.set_key("USER_OFF_STATUS", USER_OFF_STATUS)
