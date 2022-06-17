@@ -2,6 +2,7 @@ from . import bot, LOG_GROUP, CHANNEL
 from telethon import events, functions, Button
 from manager.database import DB
 from traceback import format_exc
+from manager.plugins import main_menu
 import os
 import sys
 import re
@@ -70,6 +71,9 @@ def Cmd(
                 text = f"**👋 Hi {info.first_name}!**\n\n**🔶 For Use From Bot Pleae Join To My Channel To Receive Updates And More ...**\n\n __• Channel:__ **@{CHANNEL}**"
                 buttons = [[Button.url("• Join Channel •", f"https://t.me/{CHANNEL}")], [Button.inline("Check Join ✅", data=f"checkjoin:{event.sender_id}")]]
                 return await event.reply(text, buttons=buttons)
+
+            if event.text == "🔙":
+                return await event.reply("**• Ok, Backed To Home Page!**", buttons=main_menu)
 
             try:
                 await func(event)
