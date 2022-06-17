@@ -10,6 +10,10 @@ async def start(event):
     info = await bot.get_entity(event.sender_id)
     await event.reply(f"**👋 Hi {info.first_name}!**\n**😘 Welcome To Acc Manager Robot!**\n\n**💡 Maker: @{bot.admin.username}**", buttons=main_menu)
 
+@Cmd(pattern="🔙")
+async def back(event):
+    await event.reply("**• Ok, Backed To Home Page!**", buttons=main_menu)
+
 @bot.on(events.CallbackQuery(data=re.compile("checkjoin\:(.*)")))
 async def checkjoin(event):
     id = int(event.pattern_match.group(1).decode('utf-8'))
