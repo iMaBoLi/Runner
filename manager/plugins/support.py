@@ -23,6 +23,5 @@ async def support(event):
     if not response.media:
         await bot.send_message(event.sender_id, f"**• Your Response From Support:**\n\n`{pas}`")
     else:
-        await bot.send_message(event.sender_id, f"**• Your Response From Support:**")
-        await response.forward_to(event.sender_id)
-    await response.reply(f"**• Message Successfuly Sended To:** ( `{event.sender_id}` )\n\n**• Message:** \n\n`{pas}`")
+        await bot.send_message(event.sender_id, f"**• Your Response From Support:**", file=response.media)
+    await response.reply(f"**• Response Message Successfuly Sended To:** ( `{event.sender_id}` )")
