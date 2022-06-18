@@ -21,7 +21,7 @@ async def support(event):
 async def ressupport(event):
     id = int(event.pattern_match.group(1).decode('utf-8'))
     async with bot.conversation(LOG_GROUP) as conv:
-        send = await event.reply(f"**• Ok, Send Your Response Message For Send To:** ( `{id}` )")
+        send = await event.edit(f"**• Ok, Send Your Response Message For Send To:** ( `{id}` )")
         response = await conv.get_response(send.id)
     if response.text == "🔙":
         return
