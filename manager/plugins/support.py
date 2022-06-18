@@ -27,4 +27,4 @@ async def ressupport(event):
         return
     send = await bot.send_message(id, "**• Your Response From Support:**")
     await send.reply(response)
-    await response.reply(f"**• Response Message Successfuly Sended To:** ( `{id}` )", buttons=main_menu(event))
+    await response.reply(f"**• Response Message Successfuly Sended To:** ( `{id}` )")
