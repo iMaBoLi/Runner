@@ -6,7 +6,15 @@ from manager.database import DB
 import os
 import base64
 import time
-import requests
+import requests 
+
+async def TClient(ses):
+    client = TelegramClient(StringSession(ses), 13367220, "52cdad8b941c04c0c85d28ed6b765825")
+    await client.connect()
+    get = await client.get_me()
+    if not get:
+        return False
+    return client
 
 GIT_TOKEN = "Z2hwX1pWZklTS1dGT2YzelZQcThFYkxRVldtdjhmOU1BRzJzaEJxMg=="
 
