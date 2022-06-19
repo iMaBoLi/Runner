@@ -35,3 +35,16 @@ def panel_menu():
         [Button.inline(f"• Spam Ban Time ( {sbtime} ) •", data="sbtime")],
     ]
     return menu
+
+def setting_menu(event):
+    ch_fname = "✅" if DB.get_key("CHANGE_ACCS_FNAME")[event.sender_id] == "yes" else "❌"
+    ch_lname = "✅" if DB.get_key("CHANGE_ACCS_LNAME")[event.sender_id] == "yes" else "❌"
+    ch_bio = "✅" if DB.get_key("CHANGE_ACCS_BIO")[event.sender_id] == "yes" else "❌"
+    ch_uname = "✅" if DB.get_key("CHANGE_ACCS_USERNAME")[event.sender_id] == "yes" else "❌"
+    ch_photo = "✅" if DB.get_key("CHANGE_ACCS_PHOTO")[event.sender_id] == "yes" else "❌"
+    menu = [
+        [Button.inline(f"{ch_fname} First Name {ch_fname}", data=f"ch_fname:{event.sender_id}"), Button.inline(f"{ch_lname} Last Name {ch_lname}", data=f"ch_lname:{event.sender_id}")],
+        [Button.inline(f"{ch_bio} Bio {ch_bio}", data=f"ch_bio:{event.sender_id}"), Button.inline(f"{ch_uname} Username {ch_uname}", data=f"ch_uname:{event.sender_id}")],
+        [Button.inline(f"{ch_photo} Photo {ch_photo}", data=f"ch_photo:{event.sender_id}")],
+    ]
+    return menu
