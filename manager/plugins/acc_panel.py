@@ -21,7 +21,7 @@ async def acc_panel(event):
     client = await TClient(session)
     if not client:
         buttons = [[Button.inline("• Delete •", data=f"delacc:{phone}")]]
-        return await event.edit(f"**• This Account Is Out Of Reach Of The Robot!**\n\n__• Do You Want To Delete It From The List Of Accounts??__", buttons=buttons)
+        return await edit.edit(f"**• This Account Is Out Of Reach Of The Robot!**\n\n__• Do You Want To Delete It From The List Of Accounts??__", buttons=buttons)
     menu = manage_menu(phone)
     await edit.edit(f"""
 **#Manage_Menu**
