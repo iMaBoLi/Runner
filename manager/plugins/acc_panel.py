@@ -1,7 +1,5 @@
 from manager import bot
 from manager.events import Cmd
-from telethon import TelegramClient
-from telethon.sessions import StringSession
 from . import main_menu, back_menu, manage_menu
 from manager.database import DB
 
@@ -15,7 +13,7 @@ async def acc_panel(event):
     if phone == "🔙":
         return
     if phone not in accs:
-        return await event.reply(f"**• You Are Not Added This Phone Number:** ( `{phone}` ) **To Bot!**")
+        return await event.reply(f"**• You Are Not Added This Phone Number:** ( `{phone}` ) **To Bot!**"buttons=main_menu(event))
     edit = await event.reply("`• Please Wait . . .`")
     menu = manage_menu(phone)
     await edit.edit(f"""
