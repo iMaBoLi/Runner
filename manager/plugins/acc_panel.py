@@ -1,5 +1,6 @@
 from manager import bot
 from manager.events import Cmd
+from manager.functions import TClient
 from . import main_menu, back_menu, manage_menu
 from manager.database import DB
 
@@ -15,6 +16,11 @@ async def acc_panel(event):
     if phone not in accs:
         return await event.reply(f"**• You Are Not Added This Phone Number:** ( `{phone}` ) **To Bot!**"buttons=main_menu(event))
     edit = await event.reply("`• Please Wait . . .`")
+    session = accs[phone]
+    client = await TClient(session)
+    if not client:
+        buttons = [[Button.inline("• Delete •", data=f"delacc:{phone}")]]
+        return await event.edit(f"**• This Account Is Out Of Reach Of The Robot!**\n\n__• Do You Want To Delete It From The List Of Accounts??__", buttons=buttons)
     menu = manage_menu(phone)
     await edit.edit(f"""
 **#Manage_Menu**
