@@ -14,7 +14,7 @@ async def acc_panel(event):
     if phone == "🔙":
         return
     if phone not in accs:
-        return await event.reply(f"**• You Are Not Added This Phone Number:** ( `{phone}` ) **To Bot!**"buttons=main_menu(event))
+        return await event.reply(f"**• You Are Not Added This Phone Number:** ( `{phone}` ) **To Bot!**", buttons=main_menu(event))
     edit = await event.reply("`• Please Wait . . .`")
     session = accs[phone]
     client = await TClient(session)
