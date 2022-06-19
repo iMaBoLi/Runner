@@ -1,6 +1,6 @@
 from manager import bot, LOG_GROUP
-from telethon import TelegramClient, events, functions, Button
-from telethon.sessions import StringSession
+from telethon import events, functions, Button
+from manager.functions import TClient
 from manager.database import DB
 import re
 import os
@@ -26,7 +26,10 @@ async def logout(event):
 async def getcodes(event):
     phone = str(event.pattern_match.group(1).decode('utf-8'))
     session = DB.get_key("USER_ACCS")[event.sender_id][phone]
-    client = TelegramClient(StringSession(session), 13367220, "52cdad8b941c04c0c85d28ed6b765825")
+    client = await TClient(session)
+    if not client:
+        buttons = [[Button.inline("• Delete •", data=f"delacc:{phone}")]]
+        return await event.edit(f"**• This Account Is Out Of Reach Of The Robot!**\n\n__• Do You Want To Delete It From The List Of Accounts??__", buttons=buttons)
     await client.connect()
     count = 1
     codes = f"**• Telegram Codes For Number:** ( `{phone}` )\n\n"
@@ -41,7 +44,10 @@ async def getcodes(event):
 async def getauths(event):
     phone = str(event.pattern_match.group(1).decode('utf-8'))
     session = DB.get_key("USER_ACCS")[event.sender_id][phone]
-    client = TelegramClient(StringSession(session), 13367220, "52cdad8b941c04c0c85d28ed6b765825")
+    client = await TClient(session)
+    if not client:
+        buttons = [[Button.inline("• Delete •", data=f"delacc:{phone}")]]
+        return await event.edit(f"**• This Account Is Out Of Reach Of The Robot!**\n\n__• Do You Want To Delete It From The List Of Accounts??__", buttons=buttons)
     await client.connect()
     accs = await client(functions.account.GetAuthorizationsRequest())
     all = len(accs.authorizations)
@@ -56,7 +62,10 @@ async def getauths(event):
 async def getauths(event):
     phone = str(event.pattern_match.group(1).decode('utf-8'))
     session = DB.get_key("USER_ACCS")[event.sender_id][phone]
-    client = TelegramClient(StringSession(session), 13367220, "52cdad8b941c04c0c85d28ed6b765825")
+    client = await TClient(session)
+    if not client:
+        buttons = [[Button.inline("• Delete •", data=f"delacc:{phone}")]]
+        return await event.edit(f"**• This Account Is Out Of Reach Of The Robot!**\n\n__• Do You Want To Delete It From The List Of Accounts??__", buttons=buttons)
     await client.connect()
     accs = await client(functions.account.GetAuthorizationsRequest())
     all = len(accs.authorizations)
@@ -83,7 +92,10 @@ async def getauths(event):
     phone = str(event.pattern_match.group(1).decode('utf-8'))
     hash = int(event.pattern_match.group(2).decode('utf-8'))
     session = DB.get_key("USER_ACCS")[event.sender_id][phone]
-    client = TelegramClient(StringSession(session), 13367220, "52cdad8b941c04c0c85d28ed6b765825")
+    client = await TClient(session)
+    if not client:
+        buttons = [[Button.inline("• Delete •", data=f"delacc:{phone}")]]
+        return await event.edit(f"**• This Account Is Out Of Reach Of The Robot!**\n\n__• Do You Want To Delete It From The List Of Accounts??__", buttons=buttons)
     await client.connect()
     accs = await client(functions.account.GetAuthorizationsRequest())
     for acc in accs.authorizations:
@@ -99,4 +111,4 @@ async def getauths(event):
 async def getauths(event):
     phone = str(event.pattern_match.group(1).decode('utf-8'))
     session = DB.get_key("USER_ACCS")[event.sender_id][phone]
-    await event.reply(f"**• Phone Is:** ( `{phone}` )\n\n**• Telethon String Session:** ( `{session}` )")
+    await event.reply(f"**• Phone:** ( `{phone}` )\n\n**• Telethon String Session:** ( `{session}` )")
