@@ -5,6 +5,19 @@ from manager.database import DB
 import re
 import os
 
+@bot.on(events.CallbackQuery(data=re.compile("delacc\:(.*)")))
+async def logout(event):
+    phone = str(event.pattern_match.group(1).decode('utf-8'))
+    allaccs = DB.get_key("USER_ACCS")[event.sender_id]
+    if phone in allaccs:
+        all = DB.get_key("USER_ACCS_COUNT")
+        all[event.sender_id] -= 1
+        DB.set_key("USER_ACCS_COUNT", all)
+    allaccs = DB.get_key("USER_ACCS")
+    del allaccs[event.sender_id][phone]
+    DB.set_key("USER_ACCS", allaccs)
+    await event.edit(f"**• Ok, This Account Successfuly Deleted From Accounts List!**\n\n**• Account Number:** ( `{phone}` )")
+
 @bot.on(events.CallbackQuery(data=re.compile("logout\:(.*)")))
 async def logout(event):
     phone = str(event.pattern_match.group(1).decode('utf-8'))
