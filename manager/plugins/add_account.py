@@ -29,13 +29,13 @@ async def add_account(event):
     if phone == "🔙":
         return
     edit = await event.reply("`• Please Wait . . .`")
-    client = TelegramClient(StringSession(), 13367220, "52cdad8b941c04c0c85d28ed6b765825")
+    client = TelegramClient(StringSession(), 13367220, "52cdad8b941c04c0c85d28ed6b765825", device_model="• Acc-Manager 🔐")
     await client.connect()
     try:
         scode = await client.send_code_request(phone)
         async with bot.conversation(event.chat_id) as conv:
             send = await edit.edit(f"**• Ok, Send Your Telegram Code For:** ( `{phone}` )")
-            response = await conv.get_response(send.id)
+            response = await conv.get_response(send.id, timeout=60)
             phone_code = response.text
         if phone_code == "🔙":
             return
