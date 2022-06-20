@@ -32,6 +32,7 @@ def panel_menu():
     menu = [
         [Button.inline(f"{status} Bot Status {status}", data="onoff")],
         [Button.inline("• Send To All •", data="sendtoall")],
+        [Button.inline("• Get Users •", data="getusers")],
         [Button.inline(f"• Spam Ban Time ( {sbtime} ) •", data="sbtime")],
     ]
     return menu
