@@ -48,3 +48,22 @@ async def sendtoall(event):
         return await event.reply("**• Please Send A Number, Try Again!**", buttons=main_menu(event))
     DB.set_key("SPAM_BAN_TIME", sb)
     await response.reply(f"**• Ok, Spam Ban Time For Users Was Set To** `{sb}` **Seconds!**", buttons=main_menu(event))
+
+@bot.on(events.CallbackQuery(data="getusers"))
+async def sendtoall(event):
+    users = DB.get_key("BOT_USERS")
+    if len(users) < 100:
+        text = f"**• Bot Users:** ( `{len(users)}` )\n\n"
+        count = 1
+        for user in users:
+            text += f"**{count} -** `{user}`"
+            count += 1
+        await event.reply(text)
+    else:
+        text = f"• Bot Users: ( {len(users)} )\n\n"
+        count = 1
+        for user in users:
+            text += f"{count} - {user}"
+            count += 1
+        open("users.txt", "w").write(text)
+        await event.reply("**• Bot Users!**", file="users.txt") 
