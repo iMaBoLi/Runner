@@ -1,5 +1,5 @@
 from manager import bot
-from manager.events import Cmd
+from telethon import events
 import traceback
 import requests
 import asyncio
