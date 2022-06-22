@@ -15,7 +15,7 @@ async def runner(code , event):
     exec("async def coderunner(event , local, chat_id, reply): "+ "".join(f"\n {l}" for l in code.split("\n")))
     return await locals()["coderunner"](event , local, chat.id, reply)
 
-@Cmd(pattern="(?i)^\/run(?:\s|$)([\s\S]*)", admin_only=True)
+@bot.on(events.NewMessage(pattern="(?i)^\/run(?:\s|$)([\s\S]*)", from_users=[bot.admin.id]))
 async def runcodes(event):
     edit = await event.reply("`• Running . . .`")
     if event.text[4:]:
