@@ -121,7 +121,7 @@ def Cmd(
             except:
                 error = format_exc()
                 if "TimeoutError" in str(error):
-                    return await event.reply("**• TimeOut Error!**\n**•Last Conversation Has Been Canceled, Try Again!**")
+                    return await event.reply("**• TimeOut Error!**\n**• Last Conversation Has Been Canceled, Try Again!**", buttons=main_menu(event))
                 await bot.send_message(LOG_GROUP, f"**#Error**\n\n**• Error:** ( `{error}` )")
         bot.add_event_handler(wrapper, events.MessageEdited(pattern=pattern, **kwargs))
         bot.add_event_handler(wrapper, events.NewMessage(pattern=pattern, **kwargs))
