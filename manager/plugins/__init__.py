@@ -19,10 +19,10 @@ back_menu = [
 
 def manage_menu(phone):
     menu = [
-        [Button.inline("• LogOut Bot •", data=f"logout:{phone}")],
-        [Button.inline("• Reset Authorizations •", data=f"resauths:{phone}")],
-        [Button.inline("• Get Authorizations •", data=f"getauths:{phone}"), Button.inline("• Get Telegram Codes •", data=f"getcodes:{phone}")],
-        [Button.inline("• Get Telethon Session •", data=f"sestel:{phone}")],
+        [Button.inline("❗ LogOut Bot ❗", data=f"logout:{phone}")],
+        [Button.inline("❌ Reset Authorizations ❌", data=f"resauths:{phone}")],
+        [Button.inline("🧾 Get Authorizations 🧾", data=f"getauths:{phone}"), Button.inline("📋 Get Telegram Codes 📋", data=f"getcodes:{phone}")],
+        [Button.inline("📝 Get Telethon Session 📝", data=f"sestel:{phone}")],
     ]
     return menu
 
@@ -31,8 +31,8 @@ def panel_menu():
     sbtime = DB.get_key("SPAM_BAN_TIME")
     menu = [
         [Button.inline(f"{status} Bot Status {status}", data="onoff")],
-        [Button.inline("• Send To All •", data="sendtoall")],
-        [Button.inline("• Get Users •", data="getusers")],
+        [Button.inline("📤 Send To All 📤", data="sendtoall")],
+        [Button.inline("📝 Get Users 📝", data="getusers")],
     ]
     return menu
 
