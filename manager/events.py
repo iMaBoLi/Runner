@@ -125,7 +125,7 @@ def Cmd(
 
             try:
                 await func(event)
-            except telethon.errors.TimeoutError:
+            except asyncio.exceptions.TimeoutError:
                 return await event.reply("**• TimeOut Error!**\n**• Your Last Request Has Been Canceled, Try Again!**", buttons=main_menu(event))
             except:
                 error = format_exc()
