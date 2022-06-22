@@ -26,7 +26,7 @@ async def add_account(event):
         send = await event.reply("**•Ok, Send Your Phone Number:**\n\n__• Ex: +19307777777 __", buttons=back_menu)
         response = await conv.get_response(send.id)
         phone = response.text
-    if phone == "🔙":
+    if phone in DB.get_key("CMD_LIST"):
         return
     edit = await event.reply("`• Please Wait . . .`")
     client = TelegramClient(StringSession(), 13367220, "52cdad8b941c04c0c85d28ed6b765825", device_model="• Acc-Manager 🔐")
@@ -37,7 +37,7 @@ async def add_account(event):
             send = await edit.edit(f"**• Ok, Send Your Telegram Code For:** ( `{phone}` )")
             response = await conv.get_response(send.id, timeout=60)
             phone_code = response.text
-        if phone_code == "🔙":
+        if phone_code in DB.get_key("CMD_LIST"):
             return
     except PhoneNumberInvalidError:
         return await edit.edit("**• Your Phone Number Is Invalid!**", buttons=main_menu(event))
@@ -71,7 +71,7 @@ async def add_account(event):
             send = await edit.edit(f"**• Ok, Send Your Account Password For:** ( `{phone}` )")
             response = await conv.get_response(send.id)
             password = response.text
-        if password == "🔙":
+        if password in DB.get_key("CMD_LIST"):
             return
         edit = await event.reply("`• Please Wait . . .`")
         try:
