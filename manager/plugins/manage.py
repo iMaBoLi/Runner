@@ -22,7 +22,10 @@ async def logout(event):
 async def logout(event):
     phone = str(event.pattern_match.group(1).decode('utf-8'))
     session = DB.get_key("USER_ACCS")[event.sender_id][phone]
-    client = TelegramClient(StringSession(session), 13367220, "52cdad8b941c04c0c85d28ed6b765825")
+    client = await TClient(session)
+    if not client:
+        buttons = [[Button.inline("❌ Delete ❌", data=f"delacc:{phone}")]]
+        return await event.edit(f"**❗ This Account Is Out Of Reach Of The Robot!**\n\n__❔ Do You Want To Delete It From The List Of Accounts?__", buttons=buttons)
     await client.connect()
     await client.log_out()
     allaccs = DB.get_key("USER_ACCS")[event.sender_id]
