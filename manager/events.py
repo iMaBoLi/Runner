@@ -60,7 +60,7 @@ def Cmd(
                 DB.set_key("BLOCK_USERS", [])
             
             if not event.sender_id == bot.admin.id and event.sender_id in DB.get_key("BLOCK_USERS"):
-                return await bot.send_message(LOG_GROUP, f"**#New_Message_From_Spam_User**\n\n**• UserID:** ( `{event.sender_id}` )", buttons=[[Button.inline("UnBlock ✅", data=f"unblock:{event.sender_id}"]])
+                return await bot.send_message(LOG_GROUP, f"**#New_Message_From_Spam_User**\n\n**• UserID:** ( `{event.sender_id}` )", buttons=[[Button.inline("UnBlock ✅", data=f"unblock:{event.sender_id}")]])
 
             if not DB.get_key("USER_SPAMS"):
                 DB.set_key("USER_SPAMS", {})
