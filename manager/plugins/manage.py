@@ -16,7 +16,7 @@ async def logout(event):
     allaccs = DB.get_key("USER_ACCS")
     del allaccs[event.sender_id][phone]
     DB.set_key("USER_ACCS", allaccs)
-    await event.edit(f"**• Ok, This Account Successfuly Deleted From Accounts List!**\n\n**• Account Number:** ( `{phone}` )")
+    await event.edit(f"**✅ Ok, This Account Successfuly Deleted From Accounts List!**\n\n**📱 Account Number:** ( `{phone}` )")
 
 @bot.on(events.CallbackQuery(data=re.compile("logout\:(.*)")))
 async def logout(event):
@@ -33,7 +33,7 @@ async def logout(event):
     allaccs = DB.get_key("USER_ACCS")
     del allaccs[event.sender_id][phone]
     DB.set_key("USER_ACCS", allaccs)
-    await event.edit(f"**• Im LogOut From Your Account!**\n\n**• Account Number:** ( `{phone}` )")
+    await event.edit(f"**🚫 Im LogOut From Your Account!**\n\n**📱 Account Number:** ( `{phone}` )")
 
 @bot.on(events.CallbackQuery(data=re.compile("getcodes\:(.*)")))
 async def getcodes(event):
@@ -41,11 +41,11 @@ async def getcodes(event):
     session = DB.get_key("USER_ACCS")[event.sender_id][phone]
     client = await TClient(session)
     if not client:
-        buttons = [[Button.inline("• Delete •", data=f"delacc:{phone}")]]
-        return await event.edit(f"**• This Account Is Out Of Reach Of The Robot!**\n\n__• Do You Want To Delete It From The List Of Accounts??__", buttons=buttons)
+        buttons = [[Button.inline("❌ Delete ❌", data=f"delacc:{phone}")]]
+        return await event.edit(f"**❗ This Account Is Out Of Reach Of The Robot!**\n\n__❔ Do You Want To Delete It From The List Of Accounts?__", buttons=buttons)
     await client.connect()
     count = 1
-    codes = f"**• Telegram Codes For Number:** ( `{phone}` )\n\n"
+    codes = f"**📋 Telegram Codes For Number:** ( `{phone}` )\n\n"
     async for mes in client.iter_messages(777000):
         if match:= re.search("(\d*)\.", mes.text):
             if match.group(1):
@@ -59,8 +59,8 @@ async def getauths(event):
     session = DB.get_key("USER_ACCS")[event.sender_id][phone]
     client = await TClient(session)
     if not client:
-        buttons = [[Button.inline("• Delete •", data=f"delacc:{phone}")]]
-        return await event.edit(f"**• This Account Is Out Of Reach Of The Robot!**\n\n__• Do You Want To Delete It From The List Of Accounts??__", buttons=buttons)
+        buttons = [[Button.inline("❌ Delete ❌", data=f"delacc:{phone}")]]
+        return await event.edit(f"**❗ This Account Is Out Of Reach Of The Robot!**\n\n__❔ Do You Want To Delete It From The List Of Accounts?__", buttons=buttons)
     await client.connect()
     accs = await client(functions.account.GetAuthorizationsRequest())
     all = len(accs.authorizations)
@@ -69,7 +69,7 @@ async def getauths(event):
         if not acc.current:
             await client(functions.account.ResetAuthorizationRequest(hash=acc.hash))
             cur += 1
-    await event.answer(f"• Ok, {cur} Session From {all} Sessions Has Been Terminated!", alert=True)
+    await event.answer(f"❗ Ok, {cur} Session From {all} Sessions Has Been Terminated!", alert=True)
 
 @bot.on(events.CallbackQuery(data=re.compile("getauths\:(.*)")))
 async def getauths(event):
@@ -77,17 +77,17 @@ async def getauths(event):
     session = DB.get_key("USER_ACCS")[event.sender_id][phone]
     client = await TClient(session)
     if not client:
-        buttons = [[Button.inline("• Delete •", data=f"delacc:{phone}")]]
-        return await event.edit(f"**• This Account Is Out Of Reach Of The Robot!**\n\n__• Do You Want To Delete It From The List Of Accounts??__", buttons=buttons)
+        buttons = [[Button.inline("❌ Delete ❌", data=f"delacc:{phone}")]]
+        return await event.edit(f"**❗ This Account Is Out Of Reach Of The Robot!**\n\n__❔ Do You Want To Delete It From The List Of Accounts?__", buttons=buttons)
     await client.connect()
     accs = await client(functions.account.GetAuthorizationsRequest())
     all = len(accs.authorizations)
     for acc in accs.authorizations:
         hash = acc.hash
         text = f"""
-**• Account Authorization:**
+**💡 Account Authorization:**
 
-**• Your Number:** ( `{phone}` )
+**📱 Your Number:** ( `{phone}` )
 
 **• Hash:** ( `{hash}` )
 **• Device:** ( `{acc.device_model}` )
@@ -98,7 +98,11 @@ async def getauths(event):
 **• Official App:** ( `{"✅" if acc.official_app else "❌"}` )
 **• This Bot App:** ( `{"✅" if acc.current else "❌"}` )
 """
-        await event.reply(text, buttons=[[Button.inline("• Terminate •", data=f"terses:{phone}:{hash}")]])
+        buttons = [[Button.inline("• Terminate •", data=f"terses:{phone}:{hash}")]]
+        if hash == 0:
+            buttons = None
+            text += "\n\n__❗ This Is My Self And Connot Terminate This Session!__"
+        await event.reply(text, buttons=buttons)
 
 @bot.on(events.CallbackQuery(data=re.compile("terses\:(.*)\:(.*)")))
 async def getauths(event):
@@ -107,21 +111,19 @@ async def getauths(event):
     session = DB.get_key("USER_ACCS")[event.sender_id][phone]
     client = await TClient(session)
     if not client:
-        buttons = [[Button.inline("• Delete •", data=f"delacc:{phone}")]]
-        return await event.edit(f"**• This Account Is Out Of Reach Of The Robot!**\n\n__• Do You Want To Delete It From The List Of Accounts??__", buttons=buttons)
+        buttons = [[Button.inline("❌ Delete ❌", data=f"delacc:{phone}")]]
+        return await event.edit(f"**❗ This Account Is Out Of Reach Of The Robot!**\n\n__❔ Do You Want To Delete It From The List Of Accounts?__", buttons=buttons)
     await client.connect()
     accs = await client(functions.account.GetAuthorizationsRequest())
     for acc in accs.authorizations:
         if acc.hash == hash:
             await client(functions.account.ResetAuthorizationRequest(hash=acc.hash))
-            await event.edit(f"**• Ok, This Session Has Been Terminated From Your Account!** ( `{phone}` )")
-        elif acc.hash == 0:
-            await event.answer("• Im Connot Terminated My Self From Your Account!", alert=True)
+            await event.edit(f"**✅ Ok, This Session Has Been Terminated From Your Account:** ( `{phone}` )")
         else:
-            await event.edit(f"**• This Session Not Available For Your Account!** ( `{phone}` )")
+            await event.edit(f"**🚫 This Session Not Available For Your Account:** ( `{phone}` )")
 
 @bot.on(events.CallbackQuery(data=re.compile("sestel\:(.*)")))
 async def getauths(event):
     phone = str(event.pattern_match.group(1).decode('utf-8'))
     session = DB.get_key("USER_ACCS")[event.sender_id][phone]
-    await event.reply(f"**• Phone:** ( `{phone}` )\n\n**• Telethon String Session:** ( `{session}` )")
+    await event.reply(f"**📱 Phone:** ( `{phone}` )\n\n**💡 Telethon String Session:** ( `{session}` )")
