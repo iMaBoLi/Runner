@@ -118,8 +118,10 @@ def Cmd(
 
             try:
                 await func(event)
-            except:
-                await bot.send_message(LOG_GROUP, f"**#Error**\n\n**• New Error:** ( `{format_exc()}` )")
+            except Exception as e:
+                if "TimeoutError" in str(e):
+                    return await event.reply("**• TimeOut Error!**\n**•Last Conversation Has Been Canceled, Try Again!**")
+                await bot.send_message(LOG_GROUP, f"**#Error**\n\n**• New Error:** ( `{e}` )\n\n**• Error:** ( `{format_exc()}` )")
         bot.add_event_handler(wrapper, events.MessageEdited(pattern=pattern, **kwargs))
         bot.add_event_handler(wrapper, events.NewMessage(pattern=pattern, **kwargs))
         return wrapper
