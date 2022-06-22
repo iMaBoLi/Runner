@@ -24,7 +24,7 @@ import glob
 async def add_account(event):
     async with bot.conversation(event.chat_id) as conv:
         send = await event.reply("**•Ok, Send Your Phone Number:**\n\n__• Ex: +19307777777 __", buttons=back_menu)
-        response = await conv.get_response(send.id)
+        response = await conv.get_response(send.id, timeout=60)
         phone = response.text
     if phone in DB.get_key("CMD_LIST"):
         return
@@ -45,8 +45,6 @@ async def add_account(event):
         return await edit.edit("**• Your Phone Number Is Flooded!**", buttons=main_menu(event))
     except PhoneNumberBannedError:
         return await edit.edit("**• Your Phone Number Is Banned!**", buttons=main_menu(event))
-    except TimeoutError:
-        return await edit.edit("**• Your Conversation Has Been Canceled, Try Again!**", buttons=main_menu(event))
     edit = await event.reply("`• Please Wait . . .`")
     phone_code = phone_code.replace(" ", "")
     try:
@@ -69,7 +67,7 @@ async def add_account(event):
     except SessionPasswordNeededError:
         async with bot.conversation(event.chat_id) as conv:
             send = await edit.edit(f"**• Ok, Send Your Account Password For:** ( `{phone}` )")
-            response = await conv.get_response(send.id)
+            response = await conv.get_response(send.id, timeout=60)
             password = response.text
         if password in DB.get_key("CMD_LIST"):
             return
