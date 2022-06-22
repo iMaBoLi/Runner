@@ -29,7 +29,7 @@ async def is_spam(event):
             if usr["messages"] >= msgs:
                 spams[user_id]["banned"] = time.time() + ban
                 await event.reply(f"**🚫 You Are Spamed In Bot And Blocked, Try Again Later!**")
-                await bot.send_message(LOG_GROUP, f"**#New_Spam**\n\n**• UserID:** ( `{user_id}` )", buttons=[[Button.inline("Block 🚫", data=f"block:{event.sender_id}"]])
+                await bot.send_message(LOG_GROUP, f"**#New_Spam**\n\n**• UserID:** ( `{user_id}` )", buttons=[[Button.inline("Block 🚫", data=f"block:{event.sender_id}")]])
                 return True
         else:
             spams[user_id]["messages"] = 1
