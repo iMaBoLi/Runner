@@ -9,13 +9,13 @@ async def info(event):
     acc_count = len(DB.get_key("USER_ACCS")[event.sender_id])
     date = strftime("%Y/%m/%d - %H:%M:%S", gmtime())
     text = f"""
-**• Your Information:**
+**📝 Your Information:**
 
-**• Name:** ( `{info.first_name}` )
-**• UserID:** ( `{info.id}` )
+**✏️ Name:** ( `{info.first_name}` )
+**🆔 UserID:** ( `{info.id}` )
 
-**• Accounts Count:** ( `{acc_count}` )
+**💡 Accounts Count:** ( `{acc_count}` )
 
-__{date}__
+__✳️ {date}__
 """
     await event.reply(text)
