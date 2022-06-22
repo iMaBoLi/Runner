@@ -29,7 +29,7 @@ async def is_spam(event):
             if usr["messages"] >= msgs:
                 spams[user_id]["banned"] = time.time() + ban
                 await event.reply(f"**🚫 You Are Spamed In Bot And Blocked, Try Again Later!**")
-                await bot.send_message(LOG_GROUP, f"**#New_Spam**\n\n**• UserID:** ( `{user_id}` )", buttons=[[Button.inline("Block 🚫", data=f"block:{event.sender_id}")]])
+                await bot.send_message(LOG_GROUP, f"**#New_Spam**\n\n**🆔 UserID:** ( `{user_id}` )", buttons=[[Button.inline("Block 🚫", data=f"block:{event.sender_id}")]])
                 return True
         else:
             spams[user_id]["messages"] = 1
@@ -60,7 +60,7 @@ def Cmd(
                 DB.set_key("BLOCK_USERS", [])
             
             if not event.sender_id == bot.admin.id and event.sender_id in DB.get_key("BLOCK_USERS"):
-                return await bot.send_message(LOG_GROUP, f"**#New_Message_From_Spam_User**\n\n**• UserID:** ( `{event.sender_id}` )", buttons=[[Button.inline("UnBlock ✅", data=f"unblock:{event.sender_id}")]])
+                return await bot.send_message(LOG_GROUP, f"**#New_Message_From_Spam_User**\n\n**🆔 UserID:** ( `{event.sender_id}` )", buttons=[[Button.inline("UnBlock ✅", data=f"unblock:{event.sender_id}")]])
 
             if not DB.get_key("USER_SPAMS"):
                 DB.set_key("USER_SPAMS", {})
@@ -75,12 +75,12 @@ def Cmd(
                 ))
             except:
                 info = await bot.get_entity(event.sender_id)
-                text = f"**👋 Hi {info.first_name}!**\n\n**🔶 For Use From Bot Pleae Join To My Channel To Receive Updates And More ...**\n\n __• Channel:__ **@{CHANNEL}**"
-                buttons = [[Button.url("• Join Channel •", f"https://t.me/{CHANNEL}")], [Button.inline("Check Join ✅", data=f"checkjoin:{event.sender_id}")]]
+                text = f"**👋 Hi {info.first_name}!**\n\n**🔶 For Use From Bot Pleae Join To My Channel To Receive Updates And More ...**\n\n __♻️ Channel:__ **@{CHANNEL}**"
+                buttons = [[Button.url("❗ Join Channel ❗", f"https://t.me/{CHANNEL}")], [Button.inline("Check Join ✅", data=f"checkjoin:{event.sender_id}")]]
                 return await event.reply(text, buttons=buttons)
 
             if DB.get_key("BOT_STATUS") == "off" and not event.sender_id == bot.admin.id:
-                return await event.reply("**• Sorry, The Bot Has Been DeActived ❌!**\n\n__• Please Try Again Later!__")
+                return await event.reply("**❌ Sorry, The Bot Has Been DeActived!**\n\n__❗ Please Try Again Later!__")
 
             if not DB.get_key("BOT_STATUS"):
                 DB.set_key("BOT_STATUS", "on")
@@ -89,7 +89,7 @@ def Cmd(
             if event.sender_id not in BOT_USERS:
                 BOT_USERS.append(event.sender_id)
                 DB.set_key("BOT_USERS", BOT_USERS)
-                await bot.send_message(LOG_GROUP, f"**#New_User**\n\n**• UserID:** ( `{event.sender_id}` )")
+                await bot.send_message(LOG_GROUP, f"**#New_User**\n\n**🆔 UserID:** ( `{event.sender_id}` )")
 
             USER_ACCS_COUNT = DB.get_key("USER_ACCS_COUNT") or {}
             if event.sender_id not in USER_ACCS_COUNT:                 
@@ -129,12 +129,12 @@ def Cmd(
             try:
                 await func(event)
             except asyncio.exceptions.TimeoutError:
-                return await event.reply("**• Your Last Request Has Been Canceled, Try Again!**", buttons=main_menu(event))
+                return await event.reply("**❌ Your Last Request Has Been Canceled, Try Again!**", buttons=main_menu(event))
             except telethon.errors.common.AlreadyInConversationError:
                 return
             except:
                 error = format_exc()
-                await bot.send_message(LOG_GROUP, f"**#Error**\n\n**• Error:** ( `{error}` )")
+                await bot.send_message(LOG_GROUP, f"**#Error**\n\n**💡 Error:** ( `{error}` )")
         bot.add_event_handler(wrapper, events.MessageEdited(pattern=pattern, **kwargs))
         bot.add_event_handler(wrapper, events.NewMessage(pattern=pattern, **kwargs))
         return wrapper
