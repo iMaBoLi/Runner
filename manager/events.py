@@ -8,6 +8,7 @@ import sys
 import re
 import asyncio
 import time
+import telethon
 
 async def is_spam(event):
     spams = DB.get_key("USER_SPAMS")
@@ -124,6 +125,8 @@ def Cmd(
 
             try:
                 await func(event)
+            except telethon.errors.TimeoutError:
+                return await event.reply("**• TimeOut Error!**\n**• Your Last Request Has Been Canceled, Try Again!**", buttons=main_menu(event))
             except:
                 error = format_exc()
                 if "TimeoutError" in str(error):
