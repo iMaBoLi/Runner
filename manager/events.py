@@ -40,6 +40,12 @@ def Cmd(
     admin_only=False,
     **kwargs,
 ):
+
+    cmds = DB.get_key("CMD_LIST") or []
+    if pattern and pattern not in cmds:
+        cmds.append(pattern)
+        DB.set_key("CMD_LIST", cmds)
+
     def decorator(func):
         async def wrapper(event):
 
