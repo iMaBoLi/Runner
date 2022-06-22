@@ -10,7 +10,7 @@ async def support(event):
     async with bot.conversation(event.chat_id) as conv:
         send = await event.reply("**•Ok, Please Send Your Message To Be Sent For Support:**", buttons=back_menu)
         response = await conv.get_response(send.id)
-    if response.text == "🔙":
+    if response.text in DB.get_key("CMD_LIST"):
         return
     buttons = [[Button.inline("• Response •", data=f"response:{event.sender_id}")]]
     send = await bot.send_message(LOG_GROUP, response)
@@ -23,7 +23,7 @@ async def ressupport(event):
     async with bot.conversation(LOG_GROUP) as conv:
         send = await event.edit(f"**• Ok, Send Your Response Message For Send To:** ( `{id}` )")
         response = await conv.get_response(send.id)
-    if response.text == "🔙":
+    if response.text in DB.get_key("CMD_LIST"):
         return
     send = await bot.send_message(id, "**• Your Response From Support:**")
     await send.reply(response)
