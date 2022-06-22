@@ -12,7 +12,7 @@ import telethon
 
 async def is_spam(event):
     spams = DB.get_key("USER_SPAMS")
-    ban = DB.get_key("SPAM_BAN_TIME")
+    ban = 60
     max = 5
     msgs = 8
     user_id = event.sender_id
@@ -28,8 +28,8 @@ async def is_spam(event):
         if usr["next_time"] >= int(time.time()):
             if usr["messages"] >= msgs:
                 spams[user_id]["banned"] = time.time() + ban
-                await event.reply(f"**🚫 You Are Spamed In Bot And Blocked For:** ( `{ban} seconds` )")
-                await bot.send_message(LOG_GROUP, f"**#New_Spam**\n\n**• UserID:** ( `{user_id}` )\n\n**• Ban Time:** ( `{ban}s` )")
+                await event.reply(f"**🚫 You Are Spamed In Bot And Blocked, Try Again Later!**")
+                await bot.send_message(LOG_GROUP, f"**#New_Spam**\n\n**• UserID:** ( `{user_id}` )", buttons=[[Button.inline("Block 🚫", data=f"block:{event.sender_id}"]])
                 return True
         else:
             spams[user_id]["messages"] = 1
@@ -126,7 +126,7 @@ def Cmd(
             try:
                 await func(event)
             except asyncio.exceptions.TimeoutError:
-                return await event.reply("**• TimeOut Error!**\n**• Your Last Request Has Been Canceled, Try Again!**", buttons=main_menu(event))
+                return await event.reply("**• Your Last Request Has Been Canceled, Try Again!**", buttons=main_menu(event))
             except telethon.errors.common.AlreadyInConversationError:
                 return
             except:
