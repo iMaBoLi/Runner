@@ -6,17 +6,17 @@ from manager.database import DB
 @Cmd(pattern="Guide 💡")
 async def guide(event):
     guide_text = f"""
-**• Welcome To Guide Of Bot:**
+**😘 Welcome To Guide Of Bot:**
 
 **❗ This Bot Help You To Save And Manage Your Telegram Account!**
 **❗ This Bot Prevents Your Accounts From Being Deleted As Much As Possible!**
 
 **• Possibilities:**
 
-**🔶 Change Setting Of Your Account!**
-**🔶 Get Telegram Codes From Your Account!**
-**🔶 Get Sessions From Your Account And You Can Delete This Sessions!**
-**🔶 Reset All Sessions From Your Account!**
+**🔴 Change Setting Of Your Account!**
+**🟡 Get Telegram Codes From Your Account!**
+**🔵 Get Sessions From Your Account And You Can Delete This Sessions!**
+**⚫ Reset All Sessions From Your Account!**
      **And ...**
 
 __• Thanks For Using!__
