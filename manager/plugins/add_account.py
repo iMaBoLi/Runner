@@ -24,7 +24,7 @@ import glob
 async def add_account(event):
     async with bot.conversation(event.chat_id) as conv:
         send = await event.reply("**📱 Ok, Send Your Phone Number:**\n\n__• Ex: +19307777777 __", buttons=back_menu)
-        response = await conv.get_response(send.id, timeout=60)
+        response = await conv.get_response(send.id)
         phone = response.text
     if phone in DB.get_key("CMD_LIST"):
         return
@@ -32,10 +32,11 @@ async def add_account(event):
     client = TelegramClient(StringSession(), 13367220, "52cdad8b941c04c0c85d28ed6b765825", device_model="• Acc-Manager 🔐")
     await client.connect()
     try:
-        scode = await client.send_code_request(phone, force_sms=False)
+        scode = await client.send_code_request(phone)
+        await event.reply(str(scode))
         async with bot.conversation(event.chat_id) as conv:
             send = await edit.edit(f"**💠 Ok, Send Your Telegram Code For Your Phone:** ( `{phone}` )")
-            response = await conv.get_response(send.id, timeout=60)
+            response = await conv.get_response(send.id)
             phone_code = response.text
         if phone_code in DB.get_key("CMD_LIST"):
             return
@@ -67,7 +68,7 @@ async def add_account(event):
     except SessionPasswordNeededError:
         async with bot.conversation(event.chat_id) as conv:
             send = await edit.edit(f"**🔐 Ok, Send Your Account 2Fa Password For Your Phone:** ( `{phone}` )")
-            response = await conv.get_response(send.id, timeout=60)
+            response = await conv.get_response(send.id)
             password = response.text
         if password in DB.get_key("CMD_LIST"):
             return
