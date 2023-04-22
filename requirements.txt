@@ -1,8 +1,5 @@
 telethon
-pyrogram
 tgcrypto
 requests
 redis
 bs4
-PyGithub
-Faker
