@@ -1,11 +1,9 @@
 FROM python:3.9
 
-WORKDIR /app
+COPY . /app/
+WORKDIR /app/
 
-ADD requirements.txt requirements.txt
-
-ADD manager manager
-
-RUN pip install -r requirements.txt
+RUN pip3 install -U pip
+RUN pip3 install -U -r requirements.txt
 
 CMD ["python3", "-m", "manager"]
