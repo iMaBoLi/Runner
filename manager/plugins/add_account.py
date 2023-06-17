@@ -88,3 +88,7 @@ async def add_account(event):
             await edit.edit(f"**💡 Successfuly Login To Your Account!**\n\n**❓ Do You Want To Edit Your Account?**", buttons=buttons)
         except PasswordHashInvalidError:
             return await edit.edit("**❌ Your Account Password Is Invalid, Try Again!**", buttons=main_menu(event))
+        except Exception as error:
+            return await edit.edit(error)
+    except Exception as error:
+        return await edit.edit(error)
