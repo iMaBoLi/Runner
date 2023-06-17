@@ -1,12 +1,12 @@
 from telethon import TelegramClient
 import sys
 
-API_ID = 18917792
-API_HASH = "1f1addf94481ee8ae1594ddc6ea78dfa"
-BOT_TOKEN = "5567035354:AAEzENilm6ToojFZdZuErdtP8hryvRHTVZI"
-LOG_GROUP = "MyLogAccManagerGroup"
-CHANNEL = "AccManager_Ch"
-ADMIN_ID = 5250298585
+API_ID = 26909317
+API_HASH = "bae2fc6f671b02f9bea0473ed369a95f"
+BOT_TOKEN = "5709311401:AAHaqis-wcrhkAnHgrVLPrKpc6ur6relVy4"
+LOG_GROUP = "GroupFidoTemp"
+CHANNEL = "BackUpFidoTemp"
+ADMIN_ID = 5889107490
 
 print("• Starting Bot . . .")
 
