@@ -14,6 +14,10 @@ import re
 import json
 import time
 
+API_ID = 909317
+API_HASH = "bae2fc6f671b02f9bea0473ed369a95f"
+SESSION = "1BJWap1sBu701IEUb87VzdxbFUTKU-05U7NKYAksocxek4x05B-rqjJoUbqeaYnNDmnyWn8LsgtqDsaQXRdg52S4U3SxsWUbbj7rCAyGC5hQoLP5uLIuc227bLPvsc6ZWEUTy6Ee6cb0OrOdZ7w6ppeaEHYTtUbKJVJNnbAhXA2sL1W3tDmS6WJN9tpLhzJv4WqVW_aDvSlolZK3IEUOID3r35ST6I_wUu8I5SaeEbJ5MAvUcg3lCUZDMgQcvt8Ms7ytLo6dWJk3hcNyUUDOHuIaxGdz50B1bEGdG1OKcpPNYoc92RAaZMa8WiBSvQFmvAvlVI5mrCoSqcXLcaXVfl0avupg0kqw="
+
 try:
     client = TelegramClient(
         session=StringSession(SESSION),
